@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public abstract class StatsList {
 
-    HashMap list = new HashMap <String, Integer>();
+    HashMap<String, Integer> list = new HashMap <>();
 
     public StatsList(){}
 

@@ -7,12 +7,15 @@ import java.util.Set;
 
 public class IpList extends StatsList{
 
+
+
     public IpList(){}
 
     public HashMap getStats(){
         int total = 0;
         Set<String> keys = list.keySet();
-        HashMap stats = new HashMap<String, Double>();
+        HashMap<String, Double> stats = new HashMap<>();
+
 
         String[] keyArray = keys.toArray(new String[keys.size()]);
 
@@ -20,13 +23,13 @@ public class IpList extends StatsList{
         for(int i = 0; i < list.size(); i++){
             String ip = keyArray[i];
 
-            total += (Integer)list.get(ip);
+            total += list.get(ip);
         }
 
         for(int i = 0; i < list.size(); i++){
             String ip = keyArray[i];
 
-            double x = (Integer)list.get(ip)/total;
+            double x = list.get(ip)/total;
             stats.put(ip, x);
         }
 
@@ -37,13 +40,11 @@ public class IpList extends StatsList{
     public void insert(String ip){
         if(list.containsKey(ip)){
 
-            Integer x = (Integer)list.get(ip);
+            Integer x = list.get(ip);
 
             list.replace(ip, x + 1);
-            return;
         }  else {
             list.put(ip, 1);
-            return;
         }
     }
 
