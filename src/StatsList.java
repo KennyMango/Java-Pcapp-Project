@@ -12,9 +12,16 @@ public abstract class StatsList {
 
     public StatsList(){}
 
-    public abstract void insert();
+    public abstract void insert(String ip);
 
     public HashMap getAll() {
         return list;
+    }
+
+    @Override
+    public String toString() {
+        return "StatsList{" +
+                "list=" + list +
+                '}';
     }
 }
