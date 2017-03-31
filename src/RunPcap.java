@@ -1,5 +1,4 @@
 import org.jnetpcap.util.PcapPacketArrayList;
-
 import java.util.Scanner;
 
 /**
@@ -26,8 +25,6 @@ public class RunPcap {
             System.out.println(PList.get(i));
         }
 
-
-
         /**
         PcapDST DST = new PcapDST(FileName);
 
@@ -46,6 +43,6 @@ public class RunPcap {
             System.out.println(DST.getSRC().get(i));
         }
 
-         */
+        */
     }
 }
