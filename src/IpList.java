@@ -9,7 +9,9 @@ public class IpList extends StatsList{
 
 
 
-    public IpList(){}
+    public IpList(){
+
+    }
 
     public HashMap getStats(){
         int total = 0;
@@ -60,5 +62,6 @@ public class IpList extends StatsList{
 
             output += "IP Address:\t" + ip + "\tCount:\t" + list.get(ip) + "\n";
         }
+        return null;
     }
 }
