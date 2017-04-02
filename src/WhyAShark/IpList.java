@@ -39,6 +39,10 @@ public class IpList extends StatsList{
         return stats;
     }
 
+    public HashMap getData(){
+        return list;
+    }
+
     @Override
     public void insert(String ip){
         if(list.containsKey(ip)){
@@ -51,7 +55,7 @@ public class IpList extends StatsList{
         }
     }
 
-    @Override
+
     public String toString(){
 
         String output = "---\tIP List\t---\n";
