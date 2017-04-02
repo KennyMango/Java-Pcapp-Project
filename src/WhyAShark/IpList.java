@@ -17,7 +17,7 @@ public class IpList extends StatsList{
     public HashMap getStats(){
         int total = 0;
         Set<String> keys = list.keySet();
-        HashMap<String, Double> stats = new HashMap<>();
+        HashMap<String, Integer> stats = new HashMap<>();
 
 
         String[] keyArray = keys.toArray(new String[keys.size()]);
@@ -32,7 +32,7 @@ public class IpList extends StatsList{
         for(int i = 0; i < list.size(); i++){
             String ip = keyArray[i];
 
-            double x = list.get(ip)/total;
+            Integer x = list.get(ip)/total;
             stats.put(ip, x);
         }
 
