@@ -7,6 +7,12 @@ import java.util.Scanner;
 public class RunPcap {
     public static void main(String[] args) {
 
+        PcapDST model  = retrieveDSTdb();
+
+
+
+        /*
+
         String FileName = "";
 
         Scanner scnr = new Scanner(System.in);
@@ -17,15 +23,21 @@ public class RunPcap {
 
         PcapFile Parse = new PcapFile(FileName);
 
-
         PcapPacketArrayList PList = Parse.readOfflineFiles();
 
 
         for (int i = 0; i < PList.size(); i++) {
             System.out.println(PList.get(i));
         }
+        */
 
-        /**
+
+    }
+
+    private static PcapDST retrieveDSTdb(){
+
+        String FileName = "sample.pcap";
+
         PcapDST DST = new PcapDST(FileName);
 
         DST.readOfflineFiles();
@@ -43,6 +55,6 @@ public class RunPcap {
             System.out.println(DST.getSRC().get(i));
         }
 
-        */
+        return null;
     }
 }
