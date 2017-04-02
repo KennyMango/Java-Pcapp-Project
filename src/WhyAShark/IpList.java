@@ -51,6 +51,7 @@ public class IpList extends StatsList{
         }
     }
 
+    @Override
     public String toString(){
 
         String output = "---\tIP List\t---\n";
@@ -64,6 +65,6 @@ public class IpList extends StatsList{
 
             output += "IP Address:\t" + ip + "\tCount:\t" + list.get(ip) + "\n";
         }
-        return null;
+        return output;
     }
 }

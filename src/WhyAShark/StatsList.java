@@ -19,7 +19,7 @@ public abstract class StatsList {
         return list;
     }
 
-    @Override
+
     public String toString() {
         return "StatsList{" +
                 "list=" + list +

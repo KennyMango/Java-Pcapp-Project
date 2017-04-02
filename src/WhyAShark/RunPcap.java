@@ -58,17 +58,22 @@ public class RunPcap extends Application{
 
         DST.readOfflineFiles();
 
-        for (int i = 0; i < DST.getDST().size(); i++) {
-            System.out.println("Destination:");
-            System.out.println( DST.getDST().get(i));
-        }
+        IpList DSTList = new IpList();
 
-        System.out.println("---------------------------------------------------------------------------");
+        IpList SRCList = new IpList();
+
+        for (int i = 0; i < DST.getDST().size(); i++) {
+
+            DSTList.insert(DST.getDST().get(i));
+
+
+        }
 
 
         for (int i = 0; i < DST.getSRC().size(); i++) {
-            System.out.println("Source:");
-            System.out.println(DST.getSRC().get(i));
+
+            SRCList.insert(DST.getSRC().get(i));
+
         }
 
         return null;
