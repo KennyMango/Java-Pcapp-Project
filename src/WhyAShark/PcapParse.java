@@ -40,9 +40,6 @@ public class PcapParse {
 
     private static int numberOfARPpackets;
 
-
-    private static int numberOfIPpackets;
-
     private static int numberOfTcpPackets;
     private static int numberOfSYN;
     private static int numberOfSYNACK;
