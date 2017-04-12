@@ -539,7 +539,6 @@ public class PcapParse {
     public static String getTrafficStats(){
         String output = "";
 
-        output += String.format("Report for %s \n\n" , FileAddress );
         output += String.format("%s \t%s %8d \n", "Total number of packets in pcap", ": ", data.getNum("numberOfPackets"));
         output += String.format("%s  \t\t\t\t\t%s %8d \n", "ARP packets", ":", data.getNum("numberOfARPpackets"));
 

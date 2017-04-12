@@ -55,7 +55,7 @@ public class displayController {
 
         PcapParse.readOfflineFiles();
 
-        System.out.println("HI");
+        trafficBut.setDisable(true);
         listView.getItems().add(PcapParse.getTrafficStats());
     }
 }
