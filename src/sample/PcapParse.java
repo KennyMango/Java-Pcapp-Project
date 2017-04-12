@@ -521,6 +521,26 @@ public class PcapParse {
     }
 
 
+    private static String getPortsUsed(String machine, TreeSet<Integer> portsUsed)
+    {
+        String output = machine + "ports used:\n";
+
+        int i = 0;
+
+        for (int port : portsUsed)
+        {
+
+            output = Integer.toString(port) +"\n";
+
+            i++;
+
+        }
+
+        return output;
+
+    }
+
+
 
 
 
