@@ -57,6 +57,28 @@ public class StatsList {
         }
     }
 
+    public HashMap getTopEight(){
+        HashMap <String, Integer> output = new HashMap<>();
+
+        while(output.size()<8) {
+            String key = "";
+            int val = 0;
+
+            for (String i : list.keySet()) {
+                if (list.get(i) > val) {
+                    if(!output.keySet().contains(key)) {
+                        val = list.get(i);
+                        key = i;
+                    }
+                }
+            }
+
+            output.put(key, val);
+        }
+
+        return output;
+    }
+
     public void removeSniffer(){
         String key =  "";
         int val = 0;
