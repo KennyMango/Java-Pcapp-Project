@@ -40,6 +40,7 @@ public class PcapParse {
     private static NumOfThings data = new NumOfThings();
 
     private static HashMap<String, String> ipAddressesVisited = new HashMap<>();
+
     private static TreeSet<Integer> clientPortsUsed = new TreeSet<>();
     private static TreeSet<Integer> serversPortsUsed = new TreeSet<>();
     private static HashMap<String, Integer> imageTypes = new HashMap<>();
@@ -574,20 +575,25 @@ public class PcapParse {
         writer.println();
     }
 
-    public static String getTCPFlagsStatistics(){
+    public static String getTCPFlagsStats(){
         String output = "";
 
-        output += String.format("TCP Flags distribution: ");
-        output += String.format("%s %s %8d %5.2f %s \n", "SYN", ": ", data.getNum("numberOfSYN"), data.calculateFlagStats("numberOfSYN"), "%");
-        output += String.format("%s %s %8d %5.2f %s \n", "SYN ACK", ": ", data.getNum("numberOfSYNACK"), data.calculateFlagStats("numberOfSYNACK"), "%");
-        output += String.format("%s %s %8d %5.2f %s \n", "ACK", ": ", data.getNum("numberOfACK"), data.calculateFlagStats("numberOfACK"), "%");
-        output += String.format("%s %s %8d %5.2f %s \n", "PSH ACK", ": ", data.getNum("numberOfPSHACK"), data.calculateFlagStats("numberOfPSHACK"), "%");
-        output += String.format("%s %s %8d %5.2f %s \n", "FIN PSH ACK", ": ", data.getNum("numberOfFINPSHACK"), data.calculateFlagStats("numberOfFINPSHACK"), "%");
-        output += String.format("%s %s %8d %5.2f %s \n", "FIN ACK", ": ", data.getNum("numberOfFINACK"), data.calculateFlagStats("numberOfFINACK"), "%");
-        output += String.format("%s %s %8d %5.2f %s \n", "RST", ": ", data.getNum("numberOfRST"), data.calculateFlagStats("numberOfRST"), "%");
+        output += String.format("TCP Flags distribution: \n");
+        output += String.format("%s \t\t\t%s %8d \t\t%5.2f %s \n", "SYN", ": ", data.getNum("numberOfSYN"), data.calculateFlagStats("numberOfSYN"), "%");
+        output += String.format("%s \t\t%s %8d \t\t%5.2f %s \n", "SYN ACK", ": ", data.getNum("numberOfSYNACK"), data.calculateFlagStats("numberOfSYNACK"), "%");
+        output += String.format("%s \t\t\t%s %8d \t\t%5.2f %s \n", "ACK", ": ", data.getNum("numberOfACK"), data.calculateFlagStats("numberOfACK"), "%");
+        output += String.format("%s \t\t%s %8d \t\t%5.2f %s \n", "PSH ACK", ": ", data.getNum("numberOfPSHACK"), data.calculateFlagStats("numberOfPSHACK"), "%");
+        output += String.format("%s \t%s %8d \t\t%5.2f %s \n", "FIN PSH ACK", ": ", data.getNum("numberOfFINPSHACK"), data.calculateFlagStats("numberOfFINPSHACK"), "%");
+        output += String.format("%s \t\t%s %8d \t\t%5.2f %s \n", "FIN ACK", ": ", data.getNum("numberOfFINACK"), data.calculateFlagStats("numberOfFINACK"), "%");
+        output += String.format("%s \t\t\t%s %8d \t\t%5.2f %s \n", "RST", ": ", data.getNum("numberOfRST"), data.calculateFlagStats("numberOfRST"), "%");
         System.out.println(output);
         return output;
     }
 
+
+    public static TreeSet<Integer> getClientPortsUsed() {
+        System.out.println(clientPortsUsed);
+        return clientPortsUsed;
+    }
 
 }
