@@ -32,9 +32,9 @@ public class Controller {
 
         DST.readOfflineFiles();
 
-        IpList DSTList = new IpList();
+        StatsList DSTList = new StatsList();
 
-        IpList SRCList = new IpList();
+        StatsList SRCList = new StatsList();
 
         for (int i = 0; i < DST.getDST().size(); i++) {
 
