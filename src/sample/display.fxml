@@ -16,7 +16,7 @@
           <children>
             <GridPane layoutX="0.0" layoutY="0.0" prefHeight="361.0" prefWidth="258.0000999999975">
               <children>
-                <Button minHeight="30.0" minWidth="112.0" mnemonicParsing="false" text="Traffic Stats" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+                <Button fx:id="trafficBut" minHeight="30.0" minWidth="112.0" mnemonicParsing="false" text="Traffic Stats" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
                 <Button minHeight="30.0" minWidth="112.0" mnemonicParsing="false" text="TCP Flag Stats" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
                 <Button minHeight="30.0" minWidth="112.0" mnemonicParsing="false" text="Client Ports" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                 <Button minHeight="30.0" minWidth="112.0" mnemonicParsing="false" text="Server Ports" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
@@ -37,7 +37,7 @@
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="360.0" prefWidth="339.0">
           <children>
-            <ListView layoutX="0.0" layoutY="0.0" prefHeight="362.0" prefWidth="338.0000999999975" />
+            <ListView fx:id="listView" layoutX="0.0" layoutY="0.0" prefHeight="362.0" prefWidth="338.0000999999975" />
           </children>
         </AnchorPane>
       </items>

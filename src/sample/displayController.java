@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -20,7 +21,13 @@ import java.io.File;
 public class displayController {
 
     @FXML
+    private ListView listView;
+
+    @FXML
     private Button graphBut;
+
+    @FXML
+    private Button trafficBut;
 
 
     public void graphBut(ActionEvent event){
@@ -39,5 +46,9 @@ public class displayController {
             System.out.println("Can't load a new window");
             System.out.println(e);
         }
+    }
+
+    public void trafficBut(ActionEvent event){
+
     }
 }

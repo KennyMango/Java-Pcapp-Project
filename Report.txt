@@ -1,28 +1,27 @@
-Report for C:\Users\hahay\IdeaProjects\WhyAShark\smallFlows.pcap
+Report for C:\Users\hahay\IdeaProjects\WhyAShark\sample.pcap
 
-Total number of packets in pcap                :     14261 
-ARP packets                                    :        18 
-TCP packets                                    :     13708 
-SSL/TLS packets                                :      3534 
-UDP packets                                    :       503 
-DNS packets                                    :        68 
-HTTP packets                                   :      1143 
-Number of  GET requests                        :       553 
-Number of POST requests                        :        11 
+Total number of packets in pcap                :      2376 
+ARP packets                                    :         0 
+TCP packets                                    :       819 
+SSL/TLS packets                                :      2085 
+UDP packets                                    :      1549 
+DNS packets                                    :        44 
+HTTP packets                                   :        14 
+Number of  GET requests                        :         7 
+Number of POST requests                        :         0 
 
 TCP Flags distribution: 
-SYN          :       407  2.97 % 
-SYN ACK      :       367  2.68 % 
-ACK          :      8622 62.90 % 
-PSH ACK      :      3528 25.74 % 
-FIN PSH ACK  :        15  0.11 % 
-FIN ACK      :       691  5.04 % 
-RST          :        78  0.57 % 
+SYN          :        36  4.40 % 
+SYN ACK      :        42  5.13 % 
+ACK          :       481 58.73 % 
+PSH ACK      :       196 23.93 % 
+FIN PSH ACK  :         2  0.24 % 
+FIN ACK      :        38  4.64 % 
+RST          :        24  2.93 % 
 
-Found  260  images (images transferred over SSL/TLS not included): 
-GIF    65 
-PNG    4 
-JPEG   191 
+Found  2  images (images transferred over SSL/TLS not included): 
+GIF    1 
+JPEG   1 
 
 Servers'  ports used:
 
