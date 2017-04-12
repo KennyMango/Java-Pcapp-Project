@@ -30,7 +30,10 @@ public class displayController {
             Stage stage = new Stage();
 
             stage.setTitle("Graph");
-            stage.setScene(new Scene(root, 1920, 1080));
+            Scene test = new Scene(root, 1920, 1080);
+            stage.setScene(test);
+
+            test.getStylesheets().add("main.css");
             stage.show();
         }catch(Exception e){
             System.out.println("Can't load a new window");

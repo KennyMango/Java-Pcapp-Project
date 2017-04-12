@@ -449,11 +449,11 @@ public class PcapParse {
         }
     }
 
-    private static StatsList getDST(){
+    public static StatsList getDST(){
         return DSTlist;
     }
 
-    private static StatsList getSRC(){
+    public static StatsList getSRC(){
         return SRClist;
     }
 
