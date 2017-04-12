@@ -54,100 +54,17 @@ public class PcapParse {
         this.FileAddress = File;
     }
 
-//    public void readOfflineFiles() {
-//
-//        try
-//        {
-//            setMacAddress();
-//
-//            writer = new PrintWriter("Report.txt", "UTF-8");
-//
-//            StringBuilder errbuf = new StringBuilder();
-//
-//            pcap = Pcap.openOffline(FileAddress, errbuf);
-//
-//            if (pcap == null)
-//            {
-//                System.err.println(errbuf);
-//
-//                return;
-//            }
-//            PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>()
-//            {
-//
-//                public void nextPacket(PcapPacket packet, String user)
-//                {
-//                    data.update("numberOfPackets");
-//
-//                    if (packet.hasHeader(ethernet))
-//                    {
-//                        processEthernetheader();
-//
-//                        if (packet.hasHeader(ip))
-//                        {
-//                            processIPheader();
-//
-//                            createIPlist(packet);
-//
-//                            if (packet.hasHeader(tcp))
-//                            {
-//                                processTCPheader();
-//                            }
-//                            else if (packet.hasHeader(udp))
-//                            {
-//                                processUDPheader();
-//                            }
-//
-//                            if (packet.hasHeader(http))
-//                            {
-//                                processHTTPheader();
-//
-//                            }
-//
-//                            if (packet.hasHeader(webimage))
-//                            {
-//                                processImage();
-//                            }
-//                        }
-//                    }
-//                }
-//            };
-//
-//            pcap.loop(Pcap.LOOP_INFINITE, jpacketHandler, " *");
-//
-//
-//            printTrafficStatistics();
-//            printTCPflagsStatistics();
-//            printImageTypes();
-//            printPortsUsed("Servers' ", serversPortsUsed);
-//            printPortsUsed("Client's ", clientPortsUsed);
-//
-//        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//        finally
-//        {
-//            pcap.close();
-//            writer.close();
-//        }
-//
-//    }
+    public void readOfflineFiles() {
 
-    public static void main(String[] args)
-    {
         try
         {
             setMacAddress();
 
             writer = new PrintWriter("Report.txt", "UTF-8");
 
-            String pcapName = "sample.pcap";
-
             StringBuilder errbuf = new StringBuilder();
 
-            pcap = Pcap.openOffline(pcapName, errbuf);
+            pcap = Pcap.openOffline(FileAddress, errbuf);
 
             if (pcap == null)
             {
@@ -198,6 +115,7 @@ public class PcapParse {
 
             pcap.loop(Pcap.LOOP_INFINITE, jpacketHandler, " *");
 
+
             printTrafficStatistics();
             printTCPflagsStatistics();
             printImageTypes();
@@ -216,6 +134,89 @@ public class PcapParse {
         }
 
     }
+
+//    public static void main(String[] args)
+//    {
+//        try
+//        {
+//            setMacAddress();
+//
+//            writer = new PrintWriter("Report.txt", "UTF-8");
+//
+//            String pcapName = "sample.pcap";
+//
+//            StringBuilder errbuf = new StringBuilder();
+//
+//            pcap = Pcap.openOffline(pcapName, errbuf);
+//
+//            if (pcap == null)
+//            {
+//                System.err.println(errbuf);
+//
+//                return;
+//            }
+//            PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>()
+//            {
+//
+//                public void nextPacket(PcapPacket packet, String user)
+//                {
+//                    data.update("numberOfPackets");
+//
+//                    if (packet.hasHeader(ethernet))
+//                    {
+//                        processEthernetheader();
+//
+//                        if (packet.hasHeader(ip))
+//                        {
+//                            processIPheader();
+//
+//                            createIPlist(packet);
+//
+//                            if (packet.hasHeader(tcp))
+//                            {
+//                                processTCPheader();
+//                            }
+//                            else if (packet.hasHeader(udp))
+//                            {
+//                                processUDPheader();
+//                            }
+//
+//                            if (packet.hasHeader(http))
+//                            {
+//                                processHTTPheader();
+//
+//                            }
+//
+//                            if (packet.hasHeader(webimage))
+//                            {
+//                                processImage();
+//                            }
+//                        }
+//                    }
+//                }
+//            };
+//
+//            pcap.loop(Pcap.LOOP_INFINITE, jpacketHandler, " *");
+//
+//            printTrafficStatistics();
+//            printTCPflagsStatistics();
+//            printImageTypes();
+//            printPortsUsed("Servers' ", serversPortsUsed);
+//            printPortsUsed("Client's ", clientPortsUsed);
+//
+//
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        finally
+//        {
+//            pcap.close();
+//            writer.close();
+//        }
+//
+//    }
 
 
 
@@ -292,6 +293,7 @@ public class PcapParse {
         String destinationIP = FormatUtils.ip(dIP);
         DSTlist.insert(destinationIP);
         SRClist.insert(sourceIP);
+        
 
     }
 
@@ -442,6 +444,14 @@ public class PcapParse {
         {
             imageTypes.put(imageType, count + 1);
         }
+    }
+
+    private static StatsList getDST(){
+        return DSTlist;
+    }
+
+    private static StatsList getSRC(){
+        return SRClist;
     }
 
 
