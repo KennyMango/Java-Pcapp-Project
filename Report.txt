@@ -1,4 +1,4 @@
-Report for sample.pcap
+Report for 
 
 Total number of packets in pcap                :      2376 
 ARP packets                                    :         0 

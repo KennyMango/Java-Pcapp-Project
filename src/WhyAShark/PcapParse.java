@@ -26,7 +26,6 @@ import java.util.TreeSet;
 public class PcapParse {
 
     private static Pcap pcap;
-    private static String pcapName;
     private static String FileAddress = "";
 
     private static final Ethernet ethernet = new Ethernet();
@@ -35,6 +34,8 @@ public class PcapParse {
     private static final Udp udp = new Udp();
     private static final Ip4 ip = new Ip4();
     private static final WebImage webimage = new WebImage();
+    private static StatsList DSTlist = new StatsList();
+    private static StatsList SRClist = new StatsList();
 
     private static NumOfThings data = new NumOfThings();
 
@@ -53,98 +54,17 @@ public class PcapParse {
         this.FileAddress = File;
     }
 
-    public void readOfflineFiles() {
-
-        try
-        {
-            setMacAddress();
-
-            writer = new PrintWriter("Report.txt", "UTF-8");
-
-            StringBuilder errbuf = new StringBuilder();
-
-            pcap = Pcap.openOffline(FileAddress, errbuf);
-
-            if (pcap == null)
-            {
-                System.err.println(errbuf);
-
-                return;
-            }
-            PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>()
-            {
-
-                public void nextPacket(PcapPacket packet, String user)
-                {
-                    data.update("numberOfPackets");
-
-                    if (packet.hasHeader(ethernet))
-                    {
-                        processEthernetheader();
-
-                        if (packet.hasHeader(ip))
-                        {
-                            processIPheader();
-
-                            if (packet.hasHeader(tcp))
-                            {
-                                processTCPheader();
-                            }
-                            else if (packet.hasHeader(udp))
-                            {
-                                processUDPheader();
-                            }
-
-                            if (packet.hasHeader(http))
-                            {
-                                processHTTPheader();
-
-                            }
-
-                            if (packet.hasHeader(webimage))
-                            {
-                                processImage();
-                            }
-                        }
-                    }
-                }
-            };
-
-            pcap.loop(Pcap.LOOP_INFINITE, jpacketHandler, " *");
-
-
-            printTrafficStatistics();
-            printTCPflagsStatistics();
-            printImageTypes();
-            printPortsUsed("Servers' ", serversPortsUsed);
-            printPortsUsed("Client's ", clientPortsUsed);
-
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            pcap.close();
-            writer.close();
-        }
-
-    }
-
-//    public static void main(String[] args)
-//    {
+//    public void readOfflineFiles() {
+//
 //        try
 //        {
-//            macAddress = getMacAddress();
+//            setMacAddress();
 //
 //            writer = new PrintWriter("Report.txt", "UTF-8");
 //
-//            pcapName = "sample.pcap";
-//
 //            StringBuilder errbuf = new StringBuilder();
 //
-//            pcap = Pcap.openOffline(pcapName, errbuf);
+//            pcap = Pcap.openOffline(FileAddress, errbuf);
 //
 //            if (pcap == null)
 //            {
@@ -166,6 +86,8 @@ public class PcapParse {
 //                        if (packet.hasHeader(ip))
 //                        {
 //                            processIPheader();
+//
+//                            createIPlist(packet);
 //
 //                            if (packet.hasHeader(tcp))
 //                            {
@@ -193,6 +115,7 @@ public class PcapParse {
 //
 //            pcap.loop(Pcap.LOOP_INFINITE, jpacketHandler, " *");
 //
+//
 //            printTrafficStatistics();
 //            printTCPflagsStatistics();
 //            printImageTypes();
@@ -211,6 +134,88 @@ public class PcapParse {
 //        }
 //
 //    }
+
+    public static void main(String[] args)
+    {
+        try
+        {
+            setMacAddress();
+
+            writer = new PrintWriter("Report.txt", "UTF-8");
+
+            String pcapName = "sample.pcap";
+
+            StringBuilder errbuf = new StringBuilder();
+
+            pcap = Pcap.openOffline(pcapName, errbuf);
+
+            if (pcap == null)
+            {
+                System.err.println(errbuf);
+
+                return;
+            }
+            PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>()
+            {
+
+                public void nextPacket(PcapPacket packet, String user)
+                {
+                    data.update("numberOfPackets");
+
+                    if (packet.hasHeader(ethernet))
+                    {
+                        processEthernetheader();
+
+                        if (packet.hasHeader(ip))
+                        {
+                            processIPheader();
+
+                            createIPlist(packet);
+
+                            if (packet.hasHeader(tcp))
+                            {
+                                processTCPheader();
+                            }
+                            else if (packet.hasHeader(udp))
+                            {
+                                processUDPheader();
+                            }
+
+                            if (packet.hasHeader(http))
+                            {
+                                processHTTPheader();
+
+                            }
+
+                            if (packet.hasHeader(webimage))
+                            {
+                                processImage();
+                            }
+                        }
+                    }
+                }
+            };
+
+            pcap.loop(Pcap.LOOP_INFINITE, jpacketHandler, " *");
+
+            printTrafficStatistics();
+            printTCPflagsStatistics();
+            printImageTypes();
+            printPortsUsed("Servers' ", serversPortsUsed);
+            printPortsUsed("Client's ", clientPortsUsed);
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            pcap.close();
+            writer.close();
+        }
+
+    }
 
 
 
@@ -276,6 +281,18 @@ public class PcapParse {
         String destinationIP = FormatUtils.ip(ip.destination());
 
         getDestinationAddress(sourceMac, destinationIP);
+    }
+
+    private static void createIPlist(PcapPacket packet){
+        packet.getHeader(ip);
+        byte[] dIP = new byte[4], sIP = new byte[4];
+        dIP = packet.getHeader(ip).destination();
+        sIP = packet.getHeader(ip).source();
+        String sourceIP = FormatUtils.ip(sIP);
+        String destinationIP = FormatUtils.ip(dIP);
+        DSTlist.insert(destinationIP);
+        SRClist.insert(sourceIP);
+
     }
 
 
@@ -490,7 +507,7 @@ public class PcapParse {
 
     private static void printTrafficStatistics()
     {
-        writer.printf("Report for " + pcapName + "\n\n");
+        writer.printf("Report for " + FileAddress + "\n\n");
         writer.printf("%-46s %s %8d \n", "Total number of packets in pcap", ": ", data.getNum("numberOfPackets"));
         writer.printf("%-45s  %s %8d \n", "ARP packets", ": ", data.getNum("numberOfARPpackets"));
 
