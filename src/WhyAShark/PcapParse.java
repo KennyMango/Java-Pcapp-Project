@@ -457,6 +457,22 @@ public class PcapParse {
         return SRClist;
     }
 
+    public static HashMap<String, String> getIpAddressesVisited() {
+        return ipAddressesVisited;
+    }
+
+    public static TreeSet<Integer> getClientPortsUsed() {
+        return clientPortsUsed;
+    }
+
+    public static TreeSet<Integer> getServersPortsUsed() {
+        return serversPortsUsed;
+    }
+
+    public static HashMap<String, Integer> getImageTypes() {
+        return imageTypes;
+    }
+
 
 
     /**
