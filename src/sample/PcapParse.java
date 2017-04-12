@@ -65,9 +65,6 @@ public class PcapParse {
         {
             setMacAddress();
 
-            setDSTmac();
-            setSRCmac();
-
             writer = new PrintWriter("Report.txt", "UTF-8");
 
             StringBuilder errbuf = new StringBuilder();
@@ -230,13 +227,6 @@ public class PcapParse {
 //    }
 
 
-    static void setSRCmac(){
-        SRCmac = FormatUtils.mac(ethernet.source());
-    }
-
-    static void setDSTmac(){
-        DSTmac = FormatUtils.mac(ethernet.destination());
-    }
 
 
     static void setMacAddress()
@@ -397,18 +387,14 @@ public class PcapParse {
 
         String destinationMac = FormatUtils.mac(ethernet.destination());
 
-        if (sourceMac.equals(SRCmac))
-        {
+
             clientPortsUsed.add(sport);
 
-            serversPortsUsed.add(dport);
-        }
-        else if (destinationMac.equals(DSTmac))
-        {
+
             clientPortsUsed.add(dport);
 
-            serversPortsUsed.add(sport);
-        }
+
+
     }
 
     /**
@@ -498,7 +484,7 @@ public class PcapParse {
     {
         try
         {
-            if (sourceMac.equals(SRCmac))
+            if (sourceMac.equals(macAddress))
             {
                 ipAddressesVisited.put(destinationIP, "");
             }
