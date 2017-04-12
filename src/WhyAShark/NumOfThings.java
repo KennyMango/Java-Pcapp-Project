@@ -34,13 +34,13 @@ public class NumOfThings {
         return values;
     }
 
-    public int getNumberOfPackets(){
-        return values.get("numberOfPackets");
+    public int getNum(String val){
+        return values.get(val);
     }
 
-    public void addNumberOfPackets(){
-        int tmp = values.get("numberOfPackets");
-        values.replace("numberOfPackets", tmp+1);
+    public void update(String val){
+        int tmp = values.get(val);
+        values.replace(val, tmp+1);
     }
 
 }
