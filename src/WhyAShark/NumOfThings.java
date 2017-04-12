@@ -43,10 +43,10 @@ public class NumOfThings {
         values.replace(val, tmp+1);
     }
 
-    public static double calculateStats(int flags, int total){
+    public double calculateFlagStats(String flag){
         double stats;
 
-        stats = flags / total * 100;
+        stats = this.getNum(flag) / this.getNum("numberOfTcpPackets") * 100;
 
         return stats;
     }
