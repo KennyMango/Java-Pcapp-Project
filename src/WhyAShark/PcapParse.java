@@ -293,6 +293,9 @@ public class PcapParse {
         String destinationIP = FormatUtils.ip(dIP);
         DSTlist.insert(destinationIP);
         SRClist.insert(sourceIP);
+
+        DSTlist.removeSniffer();
+        SRClist.removeSniffer();
         
 
     }

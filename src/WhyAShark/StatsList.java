@@ -57,6 +57,20 @@ public class StatsList {
         }
     }
 
+    public void removeSniffer(){
+        String key =  "";
+        int val = 0;
+
+        for (String i: list.keySet()){
+            if (list.get(i) > val){
+                val = list.get(i);
+                key = i;
+            }
+        }
+
+        list.remove(key);
+    }
+
     @Override
     public String toString(){
 
