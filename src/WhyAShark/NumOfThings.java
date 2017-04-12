@@ -43,4 +43,12 @@ public class NumOfThings {
         values.replace(val, tmp+1);
     }
 
+    public static double calculateStats(int flags, int total){
+        double stats;
+
+        stats = flags / total * 100;
+
+        return stats;
+    }
+
 }

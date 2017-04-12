@@ -450,6 +450,8 @@ public class PcapParse {
         }
     }
 
+
+
     /**
      * Prints the distributions among the different image types that
      * have been downloaded in the machine
@@ -531,13 +533,13 @@ public class PcapParse {
     {
         writer.println();
         writer.println("TCP Flags distribution: ");
-        writer.printf("%-12s %s %8d %5.2f %s \n", "SYN", ": ", numberOfSYN, ((float) numberOfSYN) / numberOfTcpPackets * 100, "%");
-        writer.printf("%-12s %s %8d %5.2f %s \n", "SYN ACK", ": ", numberOfSYNACK, ((float) numberOfSYNACK) / numberOfTcpPackets * 100, "%");
-        writer.printf("%-12s %s %8d %5.2f %s \n", "ACK", ": ", numberOfACK, ((float) numberOfACK) / numberOfTcpPackets * 100, "%");
-        writer.printf("%-12s %s %8d %5.2f %s \n", "PSH ACK", ": ", numberOfPSHACK, ((float) numberOfPSHACK) / numberOfTcpPackets * 100, "%");
-        writer.printf("%-12s %s %8d %5.2f %s \n", "FIN PSH ACK", ": ", numberOfFINPSHACK, ((float) numberOfFINPSHACK) / numberOfTcpPackets * 100, "%");
-        writer.printf("%-12s %s %8d %5.2f %s \n", "FIN ACK", ": ", numberOfFINACK, ((float) numberOfFINACK) / numberOfTcpPackets * 100, "%");
-        writer.printf("%-12s %s %8d %5.2f %s \n", "RST", ": ", numberOfRST, ((float) numberOfRST) / numberOfTcpPackets * 100, "%");
+        writer.printf("%-12s %s %8d %5.2f %s \n", "SYN", ": ", data.getNum("numberOfSYN"), data.calculateStats(data.getNum("numberOfSYN"), data.getNum("numberOfTcpPackets"));
+        writer.printf("%-12s %s %8d %5.2f %s \n", "SYN ACK", ": ", data.getNum("numberOfSYNACK"), ((float) numberOfSYNACK) / numberOfTcpPackets * 100, "%");
+        writer.printf("%-12s %s %8d %5.2f %s \n", "ACK", ": ", data.getNum("numberOfACK"), ((float) numberOfACK) / numberOfTcpPackets * 100, "%");
+        writer.printf("%-12s %s %8d %5.2f %s \n", "PSH ACK", ": ", data.getNum("numberOfPSHACK"), ((float) numberOfPSHACK) / numberOfTcpPackets * 100, "%");
+        writer.printf("%-12s %s %8d %5.2f %s \n", "FIN PSH ACK", ": ", data.getNum("numberOfFINPSHACK"), ((float) numberOfFINPSHACK) / numberOfTcpPackets * 100, "%");
+        writer.printf("%-12s %s %8d %5.2f %s \n", "FIN ACK", ": ", data.getNum("numberOfFINACK"), ((float) numberOfFINACK) / numberOfTcpPackets * 100, "%");
+        writer.printf("%-12s %s %8d %5.2f %s \n", "RST", ": ", data.getNum("numberOfRST"), ((float) numberOfRST) / numberOfTcpPackets * 100, "%");
         writer.println();
     }
 
