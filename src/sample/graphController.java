@@ -31,14 +31,16 @@ public class graphController {
         assert pieChart != null : "fx:id=\"pieChart\" was not injected: check your FXML file 'sample.fxml'.";
         String FileName = Controller.getPath();
         //HashMap<String, Integer> IPList = new HashMap<String, Integer>();
-        PcapDST DST = new PcapDST(FileName);
+        PcapParse PcapParse = new PcapParse(FileName);
 
-        DST.readOfflineFiles();
+        PcapParse.readOfflineFiles();
 
-        IpList DSTList = new IpList();
+        //PcapParse.getDST().getData();
 
-        IpList SRCList = new IpList();
+        //IpList DSTList = new IpList();
 
+        //IpList SRCList = new IpList();
+/*
         for (int i = 0; i < DST.getDST().size(); i++) {
 
             DSTList.insert(DST.getDST().get(i));
@@ -51,8 +53,9 @@ public class graphController {
 
             SRCList.insert(DST.getSRC().get(i));
 
-        }
-        HashMap<String, Integer> IPList2 = DSTList.getData();
+        }*/
+        HashMap<String, Integer> IPList2 = PcapParse.getDST().getData();
+
         //HashMap<String, Integer> IPList3 = SRCList.getData();
 /*
         for (int i = 0; i < DST.getDST().size(); i++) {

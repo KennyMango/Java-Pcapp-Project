@@ -2,3 +2,6 @@
  * main.css
  */
 
+.chart{
+    -fx-background-color: black;
+}

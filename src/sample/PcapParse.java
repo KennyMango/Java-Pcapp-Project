@@ -26,7 +26,7 @@ import java.util.TreeSet;
 public class PcapParse {
 
     private static Pcap pcap;
-    private static String pcapName;
+    private static String FileAddress = "";
 
     private static final Ethernet ethernet = new Ethernet();
     private static final Http http = new Http();
@@ -34,32 +34,10 @@ public class PcapParse {
     private static final Udp udp = new Udp();
     private static final Ip4 ip = new Ip4();
     private static final WebImage webimage = new WebImage();
+    private static StatsList DSTlist = new StatsList();
+    private static StatsList SRClist = new StatsList();
 
-    private static int numberOfPackets;
-
-
-    private static int numberOfARPpackets;
-
-
-    private static int numberOfIPpackets;
-
-    private static int numberOfTcpPackets;
-    private static int numberOfSYN;
-    private static int numberOfSYNACK;
-    private static int numberOfACK;
-    private static int numberOfPSHACK;
-    private static int numberOfFINPSHACK;
-    private static int numberOfFINACK;
-    private static int numberOfRST;
-
-    private static int numberOfSslTls;
-    private static int numberOfUdpPackets;
-    private static int numberOfDNS;
-
-    private static int numberOfHTTPpackets;
-    private static int numberOfGETS;
-    private static int numberOfPosts;
-    private static int numberOfImages;
+    private static NumOfThings data = new NumOfThings();
 
     private static HashMap<String, String> ipAddressesVisited = new HashMap<>();
     private static TreeSet<Integer> clientPortsUsed = new TreeSet<>();
@@ -70,19 +48,23 @@ public class PcapParse {
 
     private static PrintWriter writer;
 
-    public static void main(String[] args)
-    {
+
+    public PcapParse(String File){
+
+        this.FileAddress = File;
+    }
+
+    public void readOfflineFiles() {
+
         try
         {
-            macAddress = getMacAddress();
+            setMacAddress();
 
             writer = new PrintWriter("Report.txt", "UTF-8");
 
-            pcapName = "smallFlows.pcap";
-
             StringBuilder errbuf = new StringBuilder();
 
-            pcap = Pcap.openOffline(pcapName, errbuf);
+            pcap = Pcap.openOffline(FileAddress, errbuf);
 
             if (pcap == null)
             {
@@ -95,7 +77,7 @@ public class PcapParse {
 
                 public void nextPacket(PcapPacket packet, String user)
                 {
-                    numberOfPackets++;
+                    data.update("numberOfPackets");
 
                     if (packet.hasHeader(ethernet))
                     {
@@ -104,6 +86,8 @@ public class PcapParse {
                         if (packet.hasHeader(ip))
                         {
                             processIPheader();
+
+                            createIPlist(packet);
 
                             if (packet.hasHeader(tcp))
                             {
@@ -131,6 +115,10 @@ public class PcapParse {
 
             pcap.loop(Pcap.LOOP_INFINITE, jpacketHandler, " *");
 
+            DSTlist.removeSniffer();
+            SRClist.removeSniffer();
+
+
             printTrafficStatistics();
             printTCPflagsStatistics();
             printImageTypes();
@@ -150,7 +138,92 @@ public class PcapParse {
 
     }
 
-    static String getMacAddress()
+//    public static void main(String[] args)
+//    {
+//        try
+//        {
+//            setMacAddress();
+//
+//            writer = new PrintWriter("Report.txt", "UTF-8");
+//
+//            String pcapName = "sample.pcap";
+//
+//            StringBuilder errbuf = new StringBuilder();
+//
+//            pcap = Pcap.openOffline(pcapName, errbuf);
+//
+//            if (pcap == null)
+//            {
+//                System.err.println(errbuf);
+//
+//                return;
+//            }
+//            PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>()
+//            {
+//
+//                public void nextPacket(PcapPacket packet, String user)
+//                {
+//                    data.update("numberOfPackets");
+//
+//                    if (packet.hasHeader(ethernet))
+//                    {
+//                        processEthernetheader();
+//
+//                        if (packet.hasHeader(ip))
+//                        {
+//                            processIPheader();
+//
+//                            createIPlist(packet);
+//
+//                            if (packet.hasHeader(tcp))
+//                            {
+//                                processTCPheader();
+//                            }
+//                            else if (packet.hasHeader(udp))
+//                            {
+//                                processUDPheader();
+//                            }
+//
+//                            if (packet.hasHeader(http))
+//                            {
+//                                processHTTPheader();
+//
+//                            }
+//
+//                            if (packet.hasHeader(webimage))
+//                            {
+//                                processImage();
+//                            }
+//                        }
+//                    }
+//                }
+//            };
+//
+//            pcap.loop(Pcap.LOOP_INFINITE, jpacketHandler, " *");
+//
+//            printTrafficStatistics();
+//            printTCPflagsStatistics();
+//            printImageTypes();
+//            printPortsUsed("Servers' ", serversPortsUsed);
+//            printPortsUsed("Client's ", clientPortsUsed);
+//
+//
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        finally
+//        {
+//            pcap.close();
+//            writer.close();
+//        }
+//
+//    }
+
+
+
+    static void setMacAddress()
     {
         try
         {
@@ -168,7 +241,7 @@ public class PcapParse {
                 {
                     sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
                 }
-                return sb.toString().replaceAll("-", ":");
+                macAddress = sb.toString().replaceAll("-", ":");
             }
         }
         catch (UnknownHostException e)
@@ -179,7 +252,10 @@ public class PcapParse {
         {
             e.printStackTrace();
         }
-        return null;
+    }
+
+    public String getMacAddress(){
+        return macAddress;
     }
 
 
@@ -193,7 +269,7 @@ public class PcapParse {
 
         if (temp.substring(45, 50).equals("08 06"))
         {
-            numberOfARPpackets++;
+            data.update("numberOfARPpackets");
         }
 
     }
@@ -203,13 +279,26 @@ public class PcapParse {
      */
     private static void processIPheader()
     {
-        numberOfIPpackets++;
 
         String sourceMac = FormatUtils.mac(ethernet.source());
 
         String destinationIP = FormatUtils.ip(ip.destination());
 
         getDestinationAddress(sourceMac, destinationIP);
+    }
+
+    private static void createIPlist(PcapPacket packet){
+        packet.getHeader(ip);
+        byte[] dIP = new byte[4], sIP = new byte[4];
+        dIP = packet.getHeader(ip).destination();
+        sIP = packet.getHeader(ip).source();
+        String sourceIP = FormatUtils.ip(sIP);
+        String destinationIP = FormatUtils.ip(dIP);
+        DSTlist.insert(destinationIP);
+        SRClist.insert(sourceIP);
+
+
+
     }
 
 
@@ -219,7 +308,7 @@ public class PcapParse {
      */
     private static void processTCPheader()
     {
-        numberOfTcpPackets++;
+        data.update("numberOfTcpPackets");
 
         int sport = tcp.source();
 
@@ -241,31 +330,31 @@ public class PcapParse {
     {
         if (tcp.flags_SYN() && (!tcp.flags_ACK()))
         {
-            numberOfSYN++;
+            data.update("numberOfSYN");
         }
         else if (tcp.flags_SYN() && tcp.flags_ACK())
         {
-            numberOfSYNACK++;
+            data.update("numberOfSYNACK");
         }
         else if (tcp.flags_ACK() && (!tcp.flags_SYN()) && (!tcp.flags_PSH()) && (!tcp.flags_FIN()) && (!tcp.flags_RST()))
         {
-            numberOfACK++;
+            data.update("numberOfACK");
         }
         else if (tcp.flags_PSH() && (tcp.flags_ACK() && (!tcp.flags_FIN())))
         {
-            numberOfPSHACK++;
+            data.update("numberOfPSHACK");
         }
         else if (tcp.flags_FIN() && tcp.flags_ACK() && (!tcp.flags_PSH()))
         {
-            numberOfFINACK++;
+            data.update("numberOfFINACK");
         }
         else if (tcp.flags_PSH() && (tcp.flags_ACK() && (tcp.flags_FIN())))
         {
-            numberOfFINPSHACK++;
+            data.update("numberOfFINPSHACK");
         }
         else if (tcp.flags_RST())
         {
-            numberOfRST++;
+            data.update("numberOfRST");
         }
     }
 
@@ -277,11 +366,11 @@ public class PcapParse {
     {
         if (sport == 53 || dport == 53)
         {
-            numberOfDNS++;
+            data.update("numberOfDNS");
         }
         else if (sport == 443 || dport == 443)
         {
-            numberOfSslTls++;
+            data.update("numberOfSslTls");
         }
     }
 
@@ -311,7 +400,7 @@ public class PcapParse {
      */
     private static void processUDPheader()
     {
-        numberOfUdpPackets++;
+        data.update("numberOfUdpPackets");
 
         int sport = udp.source();
 
@@ -327,15 +416,15 @@ public class PcapParse {
      */
     private static void processHTTPheader()
     {
-        numberOfHTTPpackets++;
+        data.update("numberOfHTTPpackets");
 
         if (http.header().contains("GET"))
         {
-            numberOfGETS++;
+            data.update("numberOfGETS");
         }
         else if (http.header().contains("POST"))
         {
-            numberOfPosts++;
+            data.update("numberOfPosts");
         }
     }
 
@@ -345,7 +434,7 @@ public class PcapParse {
      */
     private static void processImage()
     {
-        numberOfImages++;
+        data.update("numberOfImages");
 
         String imageType = http.contentTypeEnum().toString();
 
@@ -361,13 +450,23 @@ public class PcapParse {
         }
     }
 
+    public static StatsList getDST(){
+        return DSTlist;
+    }
+
+    public static StatsList getSRC(){
+        return SRClist;
+    }
+
+
+
     /**
      * Prints the distributions among the different image types that
      * have been downloaded in the machine
      */
     private static void printImageTypes()
     {
-        writer.printf("%s %d %s \n", "Found ", numberOfImages, " images (images transferred over SSL/TLS not included):");
+        writer.printf("%s %d %s \n", "Found ", data.getNum("numberOfImages"), " images (images transferred over SSL/TLS not included):");
 
         for (Map.Entry entry : imageTypes.entrySet())
         {
@@ -422,37 +521,35 @@ public class PcapParse {
 
     private static void printTrafficStatistics()
     {
-        writer.printf("Report for " + pcapName + "\n\n");
-        writer.printf("%-46s %s %8d \n", "Total number of packets in pcap", ": ", numberOfPackets);
-        writer.printf("%-45s  %s %8d \n", "ARP packets", ": ", numberOfARPpackets);
+        writer.printf("Report for " + FileAddress + "\n\n");
+        writer.printf("%-46s %s %8d \n", "Total number of packets in pcap", ": ", data.getNum("numberOfPackets"));
+        writer.printf("%-45s  %s %8d \n", "ARP packets", ": ", data.getNum("numberOfARPpackets"));
 
-        writer.printf("%-45s  %s %8d \n", "TCP packets", ": ", numberOfTcpPackets);
-        writer.printf("%-45s  %s %8d \n", "SSL/TLS packets", ": ", numberOfSslTls);
+        writer.printf("%-45s  %s %8d \n", "TCP packets", ": ", data.getNum("numberOfTcpPackets"));
+        writer.printf("%-45s  %s %8d \n", "SSL/TLS packets", ": ", data.getNum("numberOfSslTls"));
 
-        writer.printf("%-45s  %s %8d \n", "UDP packets", ": ", numberOfUdpPackets);
-        writer.printf("%-45s  %s %8d \n", "DNS packets", ": ", numberOfDNS);
-        writer.printf("%-45s  %s %8d \n", "HTTP packets", ": ", numberOfHTTPpackets);
-        writer.printf("%-45s  %s %8d \n", "Number of  GET requests", ": ", numberOfGETS);
-        writer.printf("%-45s  %s %8d \n", "Number of POST requests", ": ", numberOfPosts);
+        writer.printf("%-45s  %s %8d \n", "UDP packets", ": ", data.getNum("numberOfUdpPackets"));
+        writer.printf("%-45s  %s %8d \n", "DNS packets", ": ", data.getNum("numberOfDNS"));
+        writer.printf("%-45s  %s %8d \n", "HTTP packets", ": ", data.getNum("numberOfHTTPpackets"));
+        writer.printf("%-45s  %s %8d \n", "Number of  GET requests", ": ", data.getNum("numberOfGETS"));
+        writer.printf("%-45s  %s %8d \n", "Number of POST requests", ": ", data.getNum("numberOfPosts"));
     }
 
-    /**
-     * Prints the distributions among different TCP flags
-     * TCP Flags include: [SYN], [SYN ACK], [ACK], [PSH ACK]
-     * [FIN PSH ACK], [FIN ACK], [RST]
-     */
+
 
     private static void printTCPflagsStatistics()
     {
         writer.println();
         writer.println("TCP Flags distribution: ");
-        writer.printf("%-12s %s %8d %5.2f %s \n", "SYN", ": ", numberOfSYN, ((float) numberOfSYN) / numberOfTcpPackets * 100, "%");
-        writer.printf("%-12s %s %8d %5.2f %s \n", "SYN ACK", ": ", numberOfSYNACK, ((float) numberOfSYNACK) / numberOfTcpPackets * 100, "%");
-        writer.printf("%-12s %s %8d %5.2f %s \n", "ACK", ": ", numberOfACK, ((float) numberOfACK) / numberOfTcpPackets * 100, "%");
-        writer.printf("%-12s %s %8d %5.2f %s \n", "PSH ACK", ": ", numberOfPSHACK, ((float) numberOfPSHACK) / numberOfTcpPackets * 100, "%");
-        writer.printf("%-12s %s %8d %5.2f %s \n", "FIN PSH ACK", ": ", numberOfFINPSHACK, ((float) numberOfFINPSHACK) / numberOfTcpPackets * 100, "%");
-        writer.printf("%-12s %s %8d %5.2f %s \n", "FIN ACK", ": ", numberOfFINACK, ((float) numberOfFINACK) / numberOfTcpPackets * 100, "%");
-        writer.printf("%-12s %s %8d %5.2f %s \n", "RST", ": ", numberOfRST, ((float) numberOfRST) / numberOfTcpPackets * 100, "%");
+        writer.printf("%-12s %s %8d %5.2f %s \n", "SYN", ": ", data.getNum("numberOfSYN"), data.calculateFlagStats("numberOfSYN"), "%");
+        writer.printf("%-12s %s %8d %5.2f %s \n", "SYN ACK", ": ", data.getNum("numberOfSYNACK"), data.calculateFlagStats("numberOfSYNACK"), "%");
+        writer.printf("%-12s %s %8d %5.2f %s \n", "ACK", ": ", data.getNum("numberOfACK"), data.calculateFlagStats("numberOfACK"), "%");
+        writer.printf("%-12s %s %8d %5.2f %s \n", "PSH ACK", ": ", data.getNum("numberOfPSHACK"), data.calculateFlagStats("numberOfPSHACK"), "%");
+        writer.printf("%-12s %s %8d %5.2f %s \n", "FIN PSH ACK", ": ", data.getNum("numberOfFINPSHACK"), data.calculateFlagStats("numberOfFINPSHACK"), "%");
+        writer.printf("%-12s %s %8d %5.2f %s \n", "FIN ACK", ": ", data.getNum("numberOfFINACK"), data.calculateFlagStats("numberOfFINACK"), "%");
+        writer.printf("%-12s %s %8d %5.2f %s \n", "RST", ": ", data.getNum("numberOfRST"), data.calculateFlagStats("numberOfRST"), "%");
         writer.println();
     }
+
+
 }
