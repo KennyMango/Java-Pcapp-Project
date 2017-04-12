@@ -36,28 +36,30 @@ public class PcapParse {
     private static final Ip4 ip = new Ip4();
     private static final WebImage webimage = new WebImage();
 
-    private static int numberOfPackets;
+//    private static int numberOfPackets;
+//
+//
+//    private static int numberOfARPpackets;
+//
+//    private static int numberOfTcpPackets;
+//    private static int numberOfSYN;
+//    private static int numberOfSYNACK;
+//    private static int numberOfACK;
+//    private static int numberOfPSHACK;
+//    private static int numberOfFINPSHACK;
+//    private static int numberOfFINACK;
+//    private static int numberOfRST;
+//
+//    private static int numberOfSslTls;
+//    private static int numberOfUdpPackets;
+//    private static int numberOfDNS;
+//
+//    private static int numberOfHTTPpackets;
+//    private static int numberOfGETS;
+//    private static int numberOfPosts;
+//    private static int numberOfImages;
 
-
-    private static int numberOfARPpackets;
-
-    private static int numberOfTcpPackets;
-    private static int numberOfSYN;
-    private static int numberOfSYNACK;
-    private static int numberOfACK;
-    private static int numberOfPSHACK;
-    private static int numberOfFINPSHACK;
-    private static int numberOfFINACK;
-    private static int numberOfRST;
-
-    private static int numberOfSslTls;
-    private static int numberOfUdpPackets;
-    private static int numberOfDNS;
-
-    private static int numberOfHTTPpackets;
-    private static int numberOfGETS;
-    private static int numberOfPosts;
-    private static int numberOfImages;
+    private static NumOfThings data = new NumOfThings();
 
     private static HashMap<String, String> ipAddressesVisited = new HashMap<>();
     private static TreeSet<Integer> clientPortsUsed = new TreeSet<>();
@@ -98,7 +100,7 @@ public class PcapParse {
 
                 public void nextPacket(PcapPacket packet, String user)
                 {
-                    numberOfPackets++;
+                    data.update("numberOfPackets");
 
                     if (packet.hasHeader(ethernet))
                     {
@@ -281,7 +283,7 @@ public class PcapParse {
 
         if (temp.substring(45, 50).equals("08 06"))
         {
-            numberOfARPpackets++;
+            data.update("numberOfARPpackets");
         }
 
     }
@@ -306,7 +308,7 @@ public class PcapParse {
      */
     private static void processTCPheader()
     {
-        numberOfTcpPackets++;
+        data.update("numberOfTcpPackets");
 
         int sport = tcp.source();
 
@@ -328,31 +330,31 @@ public class PcapParse {
     {
         if (tcp.flags_SYN() && (!tcp.flags_ACK()))
         {
-            numberOfSYN++;
+            data.update("numberOfSYN");
         }
         else if (tcp.flags_SYN() && tcp.flags_ACK())
         {
-            numberOfSYNACK++;
+            data.update("numberOfSYNACK");
         }
         else if (tcp.flags_ACK() && (!tcp.flags_SYN()) && (!tcp.flags_PSH()) && (!tcp.flags_FIN()) && (!tcp.flags_RST()))
         {
-            numberOfACK++;
+            data.update("numberOfACK");
         }
         else if (tcp.flags_PSH() && (tcp.flags_ACK() && (!tcp.flags_FIN())))
         {
-            numberOfPSHACK++;
+            data.update("numberOfPSHACK");
         }
         else if (tcp.flags_FIN() && tcp.flags_ACK() && (!tcp.flags_PSH()))
         {
-            numberOfFINACK++;
+            data.update("numberOfFINACK");
         }
         else if (tcp.flags_PSH() && (tcp.flags_ACK() && (tcp.flags_FIN())))
         {
-            numberOfFINPSHACK++;
+            data.update("numberOfFINPSHACK");
         }
         else if (tcp.flags_RST())
         {
-            numberOfRST++;
+            data.update("numberOfRST");
         }
     }
 
@@ -364,11 +366,11 @@ public class PcapParse {
     {
         if (sport == 53 || dport == 53)
         {
-            numberOfDNS++;
+            data.update("numberOfDNS");
         }
         else if (sport == 443 || dport == 443)
         {
-            numberOfSslTls++;
+            data.update("numberOfSslTls");
         }
     }
 
@@ -398,7 +400,7 @@ public class PcapParse {
      */
     private static void processUDPheader()
     {
-        numberOfUdpPackets++;
+        data.update("numberOfUdpPackets");
 
         int sport = udp.source();
 
@@ -414,15 +416,15 @@ public class PcapParse {
      */
     private static void processHTTPheader()
     {
-        numberOfHTTPpackets++;
+        data.update("numberOfHTTPpackets");
 
         if (http.header().contains("GET"))
         {
-            numberOfGETS++;
+            data.update("numberOfGETS");
         }
         else if (http.header().contains("POST"))
         {
-            numberOfPosts++;
+            data.update("numberOfPosts");
         }
     }
 
@@ -432,7 +434,7 @@ public class PcapParse {
      */
     private static void processImage()
     {
-        numberOfImages++;
+        data.update("numberOfImages");
 
         String imageType = http.contentTypeEnum().toString();
 
@@ -454,7 +456,7 @@ public class PcapParse {
      */
     private static void printImageTypes()
     {
-        writer.printf("%s %d %s \n", "Found ", numberOfImages, " images (images transferred over SSL/TLS not included):");
+        writer.printf("%s %d %s \n", "Found ", data.getNum("numberOfImages"), " images (images transferred over SSL/TLS not included):");
 
         for (Map.Entry entry : imageTypes.entrySet())
         {
@@ -510,17 +512,17 @@ public class PcapParse {
     private static void printTrafficStatistics()
     {
         writer.printf("Report for " + pcapName + "\n\n");
-        writer.printf("%-46s %s %8d \n", "Total number of packets in pcap", ": ", numberOfPackets);
-        writer.printf("%-45s  %s %8d \n", "ARP packets", ": ", numberOfARPpackets);
+        writer.printf("%-46s %s %8d \n", "Total number of packets in pcap", ": ", data.getNum("numberOfPackets"));
+        writer.printf("%-45s  %s %8d \n", "ARP packets", ": ", data.getNum("numberOfARPpackets"));
 
-        writer.printf("%-45s  %s %8d \n", "TCP packets", ": ", numberOfTcpPackets);
-        writer.printf("%-45s  %s %8d \n", "SSL/TLS packets", ": ", numberOfSslTls);
+        writer.printf("%-45s  %s %8d \n", "TCP packets", ": ", data.getNum("numberOfTcpPackets"));
+        writer.printf("%-45s  %s %8d \n", "SSL/TLS packets", ": ", data.getNum("numberOfSslTls"));
 
-        writer.printf("%-45s  %s %8d \n", "UDP packets", ": ", numberOfUdpPackets);
-        writer.printf("%-45s  %s %8d \n", "DNS packets", ": ", numberOfDNS);
-        writer.printf("%-45s  %s %8d \n", "HTTP packets", ": ", numberOfHTTPpackets);
-        writer.printf("%-45s  %s %8d \n", "Number of  GET requests", ": ", numberOfGETS);
-        writer.printf("%-45s  %s %8d \n", "Number of POST requests", ": ", numberOfPosts);
+        writer.printf("%-45s  %s %8d \n", "UDP packets", ": ", data.getNum("numberOfUdpPackets"));
+        writer.printf("%-45s  %s %8d \n", "DNS packets", ": ", data.getNum("numberOfDNS"));
+        writer.printf("%-45s  %s %8d \n", "HTTP packets", ": ", data.getNum("numberOfHTTPpackets"));
+        writer.printf("%-45s  %s %8d \n", "Number of  GET requests", ": ", data.getNum("numberOfGETS"));
+        writer.printf("%-45s  %s %8d \n", "Number of POST requests", ": ", data.getNum("numberOfPosts"));
     }
 
 
