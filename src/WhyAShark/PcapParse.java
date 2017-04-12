@@ -27,6 +27,7 @@ public class PcapParse {
 
     private static Pcap pcap;
     private static String pcapName;
+    private static String FileAddress = "";
 
     private static final Ethernet ethernet = new Ethernet();
     private static final Http http = new Http();
@@ -67,6 +68,94 @@ public class PcapParse {
 
     private static PrintWriter writer;
 
+
+    public PcapParse(String File){
+
+        this.FileAddress = File;
+    }
+
+
+    public void readOfflineFiles() {
+
+        try
+        {
+            macAddress = getMacAddress();
+
+            writer = new PrintWriter("Report.txt", "UTF-8");
+
+            StringBuilder errbuf = new StringBuilder();
+
+            pcap = Pcap.openOffline(FileAddress, errbuf);
+
+            if (pcap == null)
+            {
+                System.err.println(errbuf);
+
+                return;
+            }
+            PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>()
+            {
+
+                public void nextPacket(PcapPacket packet, String user)
+                {
+                    numberOfPackets++;
+
+                    if (packet.hasHeader(ethernet))
+                    {
+                        processEthernetheader();
+
+                        if (packet.hasHeader(ip))
+                        {
+                            processIPheader();
+
+                            if (packet.hasHeader(tcp))
+                            {
+                                processTCPheader();
+                            }
+                            else if (packet.hasHeader(udp))
+                            {
+                                processUDPheader();
+                            }
+
+                            if (packet.hasHeader(http))
+                            {
+                                processHTTPheader();
+
+                            }
+
+                            if (packet.hasHeader(webimage))
+                            {
+                                processImage();
+                            }
+                        }
+                    }
+                }
+            };
+
+            pcap.loop(Pcap.LOOP_INFINITE, jpacketHandler, " *");
+
+
+            printTrafficStatistics();
+            printTCPflagsStatistics();
+            printImageTypes();
+            printPortsUsed("Servers' ", serversPortsUsed);
+            printPortsUsed("Client's ", clientPortsUsed);
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            pcap.close();
+            writer.close();
+        }
+
+    }
+
+
+/**
     public static void main(String[] args)
     {
         try
@@ -147,6 +236,8 @@ public class PcapParse {
 
     }
 
+ */
+
     static String getMacAddress()
     {
         try
@@ -200,7 +291,6 @@ public class PcapParse {
      */
     private static void processIPheader()
     {
-        numberOfIPpackets++;
 
         String sourceMac = FormatUtils.mac(ethernet.source());
 
@@ -433,11 +523,7 @@ public class PcapParse {
         writer.printf("%-45s  %s %8d \n", "Number of POST requests", ": ", numberOfPosts);
     }
 
-    /**
-     * Prints the distributions among different TCP flags
-     * TCP Flags include: [SYN], [SYN ACK], [ACK], [PSH ACK]
-     * [FIN PSH ACK], [FIN ACK], [RST]
-     */
+
 
     private static void printTCPflagsStatistics()
     {
