@@ -46,6 +46,8 @@ public class PcapParse {
     private static HashMap<String, Integer> imageTypes = new HashMap<>();
 
     private static String macAddress = "";
+    private static String SRCmac = "";
+    private static String DSTmac = "";
 
     private static PrintWriter writer;
 
@@ -57,11 +59,14 @@ public class PcapParse {
         readOfflineFiles();
     }
 
-    public void readOfflineFiles() {
+    private void readOfflineFiles() {
 
         try
         {
             setMacAddress();
+
+            setDSTmac();
+            setSRCmac();
 
             writer = new PrintWriter("Report.txt", "UTF-8");
 
@@ -225,6 +230,14 @@ public class PcapParse {
 //    }
 
 
+    static void setSRCmac(){
+        SRCmac = FormatUtils.mac(ethernet.source());
+    }
+
+    static void setDSTmac(){
+        DSTmac = FormatUtils.mac(ethernet.destination());
+    }
+
 
     static void setMacAddress()
     {
@@ -384,13 +397,13 @@ public class PcapParse {
 
         String destinationMac = FormatUtils.mac(ethernet.destination());
 
-        if (sourceMac.equals(macAddress))
+        if (sourceMac.equals(SRCmac))
         {
             clientPortsUsed.add(sport);
 
             serversPortsUsed.add(dport);
         }
-        else if (destinationMac.equals(macAddress))
+        else if (destinationMac.equals(DSTmac))
         {
             clientPortsUsed.add(dport);
 
@@ -485,7 +498,7 @@ public class PcapParse {
     {
         try
         {
-            if (sourceMac.equals(macAddress))
+            if (sourceMac.equals(SRCmac))
             {
                 ipAddressesVisited.put(destinationIP, "");
             }
