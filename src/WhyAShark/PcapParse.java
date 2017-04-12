@@ -53,12 +53,11 @@ public class PcapParse {
         this.FileAddress = File;
     }
 
-/**
     public void readOfflineFiles() {
 
         try
         {
-            macAddress = getMacAddress();
+            setMacAddress();
 
             writer = new PrintWriter("Report.txt", "UTF-8");
 
@@ -133,91 +132,89 @@ public class PcapParse {
 
     }
 
-*/
-
-    public static void main(String[] args)
-    {
-        try
-        {
-            macAddress = getMacAddress();
-
-            writer = new PrintWriter("Report.txt", "UTF-8");
-
-            pcapName = "sample.pcap";
-
-            StringBuilder errbuf = new StringBuilder();
-
-            pcap = Pcap.openOffline(pcapName, errbuf);
-
-            if (pcap == null)
-            {
-                System.err.println(errbuf);
-
-                return;
-            }
-            PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>()
-            {
-
-                public void nextPacket(PcapPacket packet, String user)
-                {
-                    data.update("numberOfPackets");
-
-                    if (packet.hasHeader(ethernet))
-                    {
-                        processEthernetheader();
-
-                        if (packet.hasHeader(ip))
-                        {
-                            processIPheader();
-
-                            if (packet.hasHeader(tcp))
-                            {
-                                processTCPheader();
-                            }
-                            else if (packet.hasHeader(udp))
-                            {
-                                processUDPheader();
-                            }
-
-                            if (packet.hasHeader(http))
-                            {
-                                processHTTPheader();
-
-                            }
-
-                            if (packet.hasHeader(webimage))
-                            {
-                                processImage();
-                            }
-                        }
-                    }
-                }
-            };
-
-            pcap.loop(Pcap.LOOP_INFINITE, jpacketHandler, " *");
-
-            printTrafficStatistics();
-            printTCPflagsStatistics();
-            printImageTypes();
-            printPortsUsed("Servers' ", serversPortsUsed);
-            printPortsUsed("Client's ", clientPortsUsed);
-
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            pcap.close();
-            writer.close();
-        }
-
-    }
+//    public static void main(String[] args)
+//    {
+//        try
+//        {
+//            macAddress = getMacAddress();
+//
+//            writer = new PrintWriter("Report.txt", "UTF-8");
+//
+//            pcapName = "sample.pcap";
+//
+//            StringBuilder errbuf = new StringBuilder();
+//
+//            pcap = Pcap.openOffline(pcapName, errbuf);
+//
+//            if (pcap == null)
+//            {
+//                System.err.println(errbuf);
+//
+//                return;
+//            }
+//            PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>()
+//            {
+//
+//                public void nextPacket(PcapPacket packet, String user)
+//                {
+//                    data.update("numberOfPackets");
+//
+//                    if (packet.hasHeader(ethernet))
+//                    {
+//                        processEthernetheader();
+//
+//                        if (packet.hasHeader(ip))
+//                        {
+//                            processIPheader();
+//
+//                            if (packet.hasHeader(tcp))
+//                            {
+//                                processTCPheader();
+//                            }
+//                            else if (packet.hasHeader(udp))
+//                            {
+//                                processUDPheader();
+//                            }
+//
+//                            if (packet.hasHeader(http))
+//                            {
+//                                processHTTPheader();
+//
+//                            }
+//
+//                            if (packet.hasHeader(webimage))
+//                            {
+//                                processImage();
+//                            }
+//                        }
+//                    }
+//                }
+//            };
+//
+//            pcap.loop(Pcap.LOOP_INFINITE, jpacketHandler, " *");
+//
+//            printTrafficStatistics();
+//            printTCPflagsStatistics();
+//            printImageTypes();
+//            printPortsUsed("Servers' ", serversPortsUsed);
+//            printPortsUsed("Client's ", clientPortsUsed);
+//
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        finally
+//        {
+//            pcap.close();
+//            writer.close();
+//        }
+//
+//    }
 
 
 
-    static String getMacAddress()
+    static void setMacAddress()
     {
         try
         {
@@ -235,7 +232,7 @@ public class PcapParse {
                 {
                     sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
                 }
-                return sb.toString().replaceAll("-", ":");
+                macAddress = sb.toString().replaceAll("-", ":");
             }
         }
         catch (UnknownHostException e)
@@ -246,7 +243,10 @@ public class PcapParse {
         {
             e.printStackTrace();
         }
-        return null;
+    }
+
+    public String getMacAddress(){
+        return macAddress;
     }
 
 
