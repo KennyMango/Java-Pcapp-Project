@@ -34,8 +34,8 @@ public class PcapParse {
     private static final Udp udp = new Udp();
     private static final Ip4 ip = new Ip4();
     private static final WebImage webimage = new WebImage();
-    public static StatsList DSTlist = new StatsList();
-    public static StatsList SRClist = new StatsList();
+    private static StatsList DSTlist = new StatsList();
+    private static StatsList SRClist = new StatsList();
 
     private static NumOfThings data = new NumOfThings();
 
@@ -449,11 +449,11 @@ public class PcapParse {
         }
     }
 
-    private static StatsList getDST(){
+    public static StatsList getDST(){
         return DSTlist;
     }
 
-    private static StatsList getSRC(){
+    public static StatsList getSRC(){
         return SRClist;
     }
 
