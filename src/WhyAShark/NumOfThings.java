@@ -43,10 +43,17 @@ public class NumOfThings {
         values.replace(val, tmp+1);
     }
 
-    public double calculateFlagStats(String flag){
-        double stats;
+    public float calculateFlagStats(String flag){
+        float stats;
 
-        stats = this.getNum(flag) / this.getNum("numberOfTcpPackets") * 100;
+        float x = this.getNum("numberOfTcpPackets");
+
+        float y = this.getNum(flag);
+
+
+        stats = (y / x) * 100;
+
+
 
         return stats;
     }

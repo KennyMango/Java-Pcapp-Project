@@ -53,7 +53,7 @@ public class PcapParse {
         this.FileAddress = File;
     }
 
-
+/**
     public void readOfflineFiles() {
 
         try
@@ -133,8 +133,8 @@ public class PcapParse {
 
     }
 
+*/
 
-/**
     public static void main(String[] args)
     {
         try
@@ -160,7 +160,7 @@ public class PcapParse {
 
                 public void nextPacket(PcapPacket packet, String user)
                 {
-                    numberOfPackets++;
+                    data.update("numberOfPackets");
 
                     if (packet.hasHeader(ethernet))
                     {
@@ -215,7 +215,7 @@ public class PcapParse {
 
     }
 
- */
+
 
     static String getMacAddress()
     {
