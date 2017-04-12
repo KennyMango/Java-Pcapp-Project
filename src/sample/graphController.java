@@ -35,7 +35,6 @@ public class graphController {
         //HashMap<String, Integer> IPList = new HashMap<String, Integer>();
         PcapParse PcapParse = new PcapParse(FileName);
 
-        PcapParse.readOfflineFiles();
 
         //PcapParse.getDST().getData();
 

@@ -53,8 +53,6 @@ public class displayController {
         //HashMap<String, Integer> IPList = new HashMap<String, Integer>();
         PcapParse PcapParse = new PcapParse(FileName);
 
-        PcapParse.readOfflineFiles();
-
         trafficBut.setDisable(true);
         listView.getItems().add(PcapParse.getTrafficStats());
     }

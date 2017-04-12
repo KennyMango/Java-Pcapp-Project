@@ -1,30 +1,35 @@
-Report for C:\Users\hahay\Desktop\sample.pcap
+Report for C:\Users\Kenneth\Documents\ACIT2B\LABS\Project\sample.pcap
 
-Total number of packets in pcap                :      2376 
+Total number of packets in pcap                :      4752 
 ARP packets                                    :         0 
-TCP packets                                    :       819 
-SSL/TLS packets                                :      2085 
-UDP packets                                    :      1549 
-DNS packets                                    :        44 
-HTTP packets                                   :        14 
-Number of  GET requests                        :         7 
+TCP packets                                    :      1638 
+SSL/TLS packets                                :      4170 
+UDP packets                                    :      3098 
+DNS packets                                    :        88 
+HTTP packets                                   :        28 
+Number of  GET requests                        :        14 
 Number of POST requests                        :         0 
 
 TCP Flags distribution: 
-SYN          :        36  4.40 % 
-SYN ACK      :        42  5.13 % 
-ACK          :       481 58.73 % 
-PSH ACK      :       196 23.93 % 
-FIN PSH ACK  :         2  0.24 % 
-FIN ACK      :        38  4.64 % 
-RST          :        24  2.93 % 
+SYN          :        72  4.40 % 
+SYN ACK      :        84  5.13 % 
+ACK          :       962 58.73 % 
+PSH ACK      :       392 23.93 % 
+FIN PSH ACK  :         4  0.24 % 
+FIN ACK      :        76  4.64 % 
+RST          :        48  2.93 % 
 
-Found  2  images (images transferred over SSL/TLS not included): 
-GIF    1 
-JPEG   1 
+Found  4  images (images transferred over SSL/TLS not included): 
+GIF    2 
+JPEG   2 
 
 Servers'  ports used:
-
+53  80  443  3544  5222  5228  5355  
 
 Client's  ports used:
-
+50917  50918  50919  50920  52104  52315  55062  56295  56379  58796  58875  59023  59565  59566  59907  59919  60231  60543  
+60571  60572  60573  60574  60576  60579  60580  60581  60582  60583  60584  60585  60586  60587  60588  60589  60590  60591  
+60592  60593  60594  60595  60596  60599  60608  60609  60610  60611  60612  60613  60614  60615  60616  60617  60618  60619  
+60620  60621  60622  60623  60624  60625  60626  60627  60628  60629  60630  60631  60633  60634  60635  60637  60638  60639  
+60640  60642  60643  60644  60645  60647  61009  61071  61532  62206  62446  62448  63208  63209  63559  63560  63699  63700  
+63702  63955  63956  64459  64614  64634  65186  65187  65188  65492  
