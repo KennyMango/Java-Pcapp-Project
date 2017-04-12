@@ -52,6 +52,8 @@ public class PcapParse {
     public PcapParse(String File){
 
         this.FileAddress = File;
+
+        readOfflineFiles();
     }
 
     public void readOfflineFiles() {
@@ -517,6 +519,9 @@ public class PcapParse {
         }
         writer.println();
     }
+
+
+
 
 
     private static void printTrafficStatistics()
