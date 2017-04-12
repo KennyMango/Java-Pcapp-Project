@@ -1,7 +1,8 @@
 package sample;
 
-import java.util.HashMap;
-import java.util.Set;
+import sun.reflect.generics.tree.Tree;
+
+import java.util.*;
 
 /**
  * Created by lucassilva on 2017-03-30.
@@ -10,7 +11,7 @@ import java.util.Set;
 
 public class StatsList {
 
-    HashMap<String, Integer> list = new HashMap <>();
+    TreeMap<String, Integer> list = new TreeMap <>();
 
 
     public StatsList(){
@@ -42,7 +43,7 @@ public class StatsList {
         return stats;
     }
 
-    public HashMap getData(){
+    public TreeMap getData(){
         return list;
     }
 
@@ -56,6 +57,36 @@ public class StatsList {
             list.put(ip, 1);
         }
     }
+
+    public Map<String, Integer> getTopEight(){
+        List<Map.Entry<String, Integer>> output =
+                new LinkedList<Map.Entry<String, Integer>>(list.entrySet());
+
+        // 2. Sort list with Collections.sort(), provide a custom Comparator
+        //    Try switch the o1 o2 position for a different order
+        Collections.sort(output, new Comparator<Map.Entry<String, Integer>>() {
+            public int compare(Map.Entry<String, Integer> o1,
+                               Map.Entry<String, Integer> o2) {
+                return (o1.getValue()).compareTo(o2.getValue());
+            }
+        });
+
+
+        // 3. Loop the sorted list and put it into a new insertion order Map LinkedHashMap
+        Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
+            for (Map.Entry<String, Integer> entry : output) {
+                sortedMap.put(entry.getKey(), entry.getValue());
+                if(sortedMap.size()>=8){
+                    return sortedMap;
+                }
+            }
+
+
+
+        return null;
+    }
+
+
 
     public void removeSniffer(){
         String key =  "";

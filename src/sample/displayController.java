@@ -49,6 +49,13 @@ public class displayController {
     }
 
     public void trafficBut(ActionEvent event){
+        String FileName = Controller.getPath();
+        //HashMap<String, Integer> IPList = new HashMap<String, Integer>();
+        PcapParse PcapParse = new PcapParse(FileName);
 
+        PcapParse.readOfflineFiles();
+
+        System.out.println("HI");
+        listView.getItems().add(PcapParse.getTrafficStats());
     }
 }

@@ -536,6 +536,25 @@ public class PcapParse {
     }
 
 
+    public static String getTrafficStats(){
+        String output = "";
+
+        output += String.format("Report for %s \n\n" , FileAddress );
+        output += String.format("%s \t%s %8d \n", "Total number of packets in pcap", ": ", data.getNum("numberOfPackets"));
+        output += String.format("%s  \t\t\t\t\t%s %8d \n", "ARP packets", ":", data.getNum("numberOfARPpackets"));
+
+        output += String.format("%s  \t\t\t\t\t%s %8d \n", "TCP packets", 	": ", data.getNum("numberOfTcpPackets"));
+        output += String.format("%s  \t\t\t\t%s %8d \n", "SSL/TLS packets", ": ", data.getNum("numberOfSslTls"));
+
+        output += String.format("%s  \t\t\t\t\t%s %8d \n", "UDP packets", ": ", data.getNum("numberOfUdpPackets"));
+        output += String.format("%s  \t\t\t\t\t%s %8d \n", "DNS packets", ": ", data.getNum("numberOfDNS"));
+        output += String.format("%s  \t\t\t\t\t%s %8d \n", "HTTP packets", ": ", data.getNum("numberOfHTTPpackets"));
+        output += String.format("%s  \t\t%s %8d \n", "Number of  GET requests", ": ", data.getNum("numberOfGETS"));
+        output += String.format("%s  \t\t%s %8d \n", "Number of POST requests", ": ", data.getNum("numberOfPosts"));
+        System.out.println(output);
+        return output;
+    }
+
 
     private static void printTCPflagsStatistics()
     {

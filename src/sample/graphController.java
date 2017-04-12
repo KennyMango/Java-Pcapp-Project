@@ -2,7 +2,9 @@ package sample;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -54,7 +56,7 @@ public class graphController {
             SRCList.insert(DST.getSRC().get(i));
 
         }*/
-        HashMap<String, Integer> IPList2 = PcapParse.getDST().getData();
+        Map<String, Integer> IPList2 = PcapParse.getDST().getTopEight();
 
         //HashMap<String, Integer> IPList3 = SRCList.getData();
 /*
