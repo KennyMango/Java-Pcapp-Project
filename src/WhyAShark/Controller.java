@@ -53,12 +53,15 @@ public class Controller {
             Parent root1 = (Parent) fxmlLoader.load();
 
 
-            stage.setMaxWidth(754);
-            stage.setMaxHeight(494);
-            stage.setMinWidth(754);
-            stage.setMinHeight(494);
+            stage.setMaxWidth(770);
+            stage.setMaxHeight(530);
+            stage.setMinWidth(770);
+            stage.setMinHeight(530);
             stage.setTitle("WhyAShark " +filePath +" - Details");
-            stage.setScene(new Scene(root1));
+            Scene scene = new Scene(root1);
+            stage.setScene(scene);
+
+            scene.getStylesheets().add("main.css");
             stage.show();
         }catch(Exception e){
             System.out.println("Can't load a new window");

@@ -46,7 +46,6 @@ public class displayController {
             stage.setScene(scene);
 
 
-            scene.getStylesheets().add("main.css");
             stage.show();
         }catch(Exception e){
             System.out.println("Can't load a new window");
@@ -76,7 +75,6 @@ public class displayController {
     }
 
     public void savetxtBut(ActionEvent event){
-
 
         FileChooser fileChooser = new FileChooser();
 

@@ -16,12 +16,36 @@
           <children>
             <GridPane layoutX="0.0" layoutY="0.0" prefHeight="461.0" prefWidth="333.0">
               <children>
-                <Button fx:id="trafficBut" minHeight="30.0" minWidth="112.0" mnemonicParsing="false" onAction="#trafficBut" text="Traffic Stats" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
-                <Button fx:id="TCPFlagBut" minHeight="30.0" minWidth="112.0" mnemonicParsing="false" onAction="#TCPFlagBut" text="TCP Flag Stats" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
-                <Button fx:id="clientBut" minHeight="30.0" minWidth="112.0" mnemonicParsing="false" onAction="#clientBut" text="All Ports" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                <Button fx:id="imgBut" minHeight="30.0" minWidth="112.0" mnemonicParsing="false" onAction="#imgBut" text="Image Extensions" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                <Button fx:id="graphBut" minHeight="30.0" minWidth="112.0" mnemonicParsing="false" onAction="#graphBut" text="Graph IP" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                <Button id="" fx:id="savetxtBut" minHeight="30.0" minWidth="112.0" mnemonicParsing="false" onAction="#savetxtBut" text="Save to txt" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                <Button fx:id="trafficBut" minHeight="40.0" minWidth="115.0" mnemonicParsing="false" onAction="#trafficBut" text="Traffic Stats" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0">
+                  <tooltip>
+                    <Tooltip text="Displays Packets Sent" />
+                  </tooltip>
+                </Button>
+                <Button fx:id="TCPFlagBut" minHeight="40.0" minWidth="115.0" mnemonicParsing="false" onAction="#TCPFlagBut" text="TCP Flag Stats" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0">
+                  <tooltip>
+                    <Tooltip text="Displays TCP Flag Distribution" />
+                  </tooltip>
+                </Button>
+                <Button fx:id="clientBut" minHeight="40.0" minWidth="115.0" mnemonicParsing="false" onAction="#clientBut" text="All Ports" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                  <tooltip>
+                    <Tooltip text="Displays All Ports Used" />
+                  </tooltip>
+                </Button>
+                <Button fx:id="imgBut" minHeight="40.0" minWidth="115.0" mnemonicParsing="false" onAction="#imgBut" text="Image Extensions" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                  <tooltip>
+                    <Tooltip text="Displays All Image Types Sent Over" />
+                  </tooltip>
+                </Button>
+                <Button fx:id="graphBut" minHeight="40.0" minWidth="115.0" mnemonicParsing="false" onAction="#graphBut" text="Graph IP" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                  <tooltip>
+                    <Tooltip text="Graphs the Destination and Source IPs" />
+                  </tooltip>
+                </Button>
+                <Button fx:id="savetxtBut" minHeight="40.0" minWidth="115.0" mnemonicParsing="false" onAction="#savetxtBut" text="Save to txt" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                  <tooltip>
+                    <Tooltip text="Save File" />
+                  </tooltip>
+                </Button>
               </children>
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -42,18 +66,13 @@
         </AnchorPane>
       </items>
     </SplitPane>
-    <MenuBar layoutX="-1.0" layoutY="2.0" minHeight="22.0" prefHeight="22.0" prefWidth="755.0">
+    <MenuBar layoutX="-1.0" layoutY="-1.0" minHeight="22.0" prefHeight="30.0" prefWidth="754.0000999999975">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
             <MenuItem mnemonicParsing="false" onAction="#fileOpen" text="Open" fx:id="fileOpen" />
             <MenuItem mnemonicParsing="false" text="Save" />
             <MenuItem mnemonicParsing="false" onAction="#fileClose" text="Close" fx:id="fileClose" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About" />
           </items>
         </Menu>
       </menus>
