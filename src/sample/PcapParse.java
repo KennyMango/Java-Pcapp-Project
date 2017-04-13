@@ -11,6 +11,7 @@ import org.jnetpcap.protocol.tcpip.Http;
 import org.jnetpcap.protocol.tcpip.Tcp;
 import org.jnetpcap.protocol.tcpip.Udp;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -368,7 +369,7 @@ public class PcapParse {
 
 
 
-    public static void writeFile(String FileName){
+    public static void writeFile(File FileName){
 
         try {
 
@@ -386,8 +387,6 @@ public class PcapParse {
         finally {
             writer.close();
         }
-
-
     }
 
 

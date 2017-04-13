@@ -28,7 +28,7 @@ public class Controller {
 
     public void openBut(ActionEvent event){
         FileChooser fc = new FileChooser();
-        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Pcap Files", "*pcap"));
+        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PCAP files (*.pcap)", "*pcap"));
         File selectedFile = fc.showOpenDialog(null);
 
         if(selectedFile != null){

@@ -8,11 +8,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.jnetpcap.Pcap;
 
+import javax.swing.*;
 import java.io.File;
 
 
@@ -39,8 +41,14 @@ public class displayController {
     @FXML
     private Button imgBut;
 
+    @FXML
+    private Button savetxtBut;
+
+
+
+
     String FileName = Controller.getPath();
-    //HashMap<String, Integer> IPList = new HashMap<String, Integer>();
+
     PcapParse PcapParse = new PcapParse(FileName);
 
 
@@ -64,22 +72,50 @@ public class displayController {
     }
 
     public void trafficBut(ActionEvent event){
-        trafficBut.setDisable(true);
+        listView.getItems().clear();
         listView.getItems().add(PcapParse.getTrafficStats());
     }
 
     public void TCPFlagBut(ActionEvent event){
-        TCPFlagBut.setDisable(true);
+        listView.getItems().clear();
         listView.getItems().add(PcapParse.getTCPFlagsStats());
     }
 
     public void clientBut(ActionEvent event){
-        clientBut.setDisable(true);
+        listView.getItems().clear();
         listView.getItems().add(PcapParse.getPortsUsed());
     }
 
     public void imgBut(ActionEvent event){
-        imgBut.setDisable(true);
+        listView.getItems().clear();
         listView.getItems().add(PcapParse.getImageTypes());
     }
+
+    public void savetxtBut(ActionEvent event){
+
+
+        FileChooser fileChooser = new FileChooser();
+
+        TextArea textArea = new TextArea();
+
+        //Set extension filter
+        FileChooser.ExtensionFilter extFilter =
+                new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        //Show save file dialog
+        File file = fileChooser.showSaveDialog(null);
+
+        if(file != null){
+            PcapParse.writeFile(file);
+        }
+
+    }
+
+    @FXML
+    public void fileClose(ActionEvent event){
+        Platform.exit();
+    }
+
+
 }
