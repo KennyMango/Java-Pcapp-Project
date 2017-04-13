@@ -128,4 +128,23 @@ public class displayController {
         }
     }
 
+    public void fileSave(ActionEvent event){
+
+        FileChooser fileChooser = new FileChooser();
+
+        TextArea textArea = new TextArea();
+
+        //Set extension filter
+        FileChooser.ExtensionFilter extFilter =
+                new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        //Show save file dialog
+        File file = fileChooser.showSaveDialog(null);
+
+        if(file != null){
+            PcapParse.writeFile(file);
+        }
+    }
+
 }
