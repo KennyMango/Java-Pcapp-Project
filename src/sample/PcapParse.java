@@ -11,7 +11,9 @@ import org.jnetpcap.protocol.tcpip.Http;
 import org.jnetpcap.protocol.tcpip.Tcp;
 import org.jnetpcap.protocol.tcpip.Udp;
 
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -42,12 +44,10 @@ public class PcapParse {
     private static HashMap<String, String> ipAddressesVisited = new HashMap<>();
 
     private static TreeSet<Integer> clientPortsUsed = new TreeSet<>();
-    private static TreeSet<Integer> serversPortsUsed = new TreeSet<>();
     private static HashMap<String, Integer> imageTypes = new HashMap<>();
 
     private static String macAddress = "";
-    private static String SRCmac = "";
-    private static String DSTmac = "";
+
 
     private static PrintWriter writer;
 
@@ -64,8 +64,6 @@ public class PcapParse {
         try
         {
             setMacAddress();
-
-            writer = new PrintWriter("Report.txt", "UTF-8");
 
             StringBuilder errbuf = new StringBuilder();
 
@@ -124,12 +122,6 @@ public class PcapParse {
             SRClist.removeSniffer();
 
 
-            printTrafficStatistics();
-            printTCPflagsStatistics();
-            printImageTypes();
-            printPortsUsed("Servers' ", serversPortsUsed);
-            printPortsUsed("Client's ", clientPortsUsed);
-
         }
         catch (Exception e)
         {
@@ -138,94 +130,9 @@ public class PcapParse {
         finally
         {
             pcap.close();
-            writer.close();
         }
 
     }
-
-//    public static void main(String[] args)
-//    {
-//        try
-//        {
-//            setMacAddress();
-//
-//            writer = new PrintWriter("Report.txt", "UTF-8");
-//
-//            String pcapName = "sample.pcap";
-//
-//            StringBuilder errbuf = new StringBuilder();
-//
-//            pcap = Pcap.openOffline(pcapName, errbuf);
-//
-//            if (pcap == null)
-//            {
-//                System.err.println(errbuf);
-//
-//                return;
-//            }
-//            PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>()
-//            {
-//
-//                public void nextPacket(PcapPacket packet, String user)
-//                {
-//                    data.update("numberOfPackets");
-//
-//                    if (packet.hasHeader(ethernet))
-//                    {
-//                        processEthernetheader();
-//
-//                        if (packet.hasHeader(ip))
-//                        {
-//                            processIPheader();
-//
-//                            createIPlist(packet);
-//
-//                            if (packet.hasHeader(tcp))
-//                            {
-//                                processTCPheader();
-//                            }
-//                            else if (packet.hasHeader(udp))
-//                            {
-//                                processUDPheader();
-//                            }
-//
-//                            if (packet.hasHeader(http))
-//                            {
-//                                processHTTPheader();
-//
-//                            }
-//
-//                            if (packet.hasHeader(webimage))
-//                            {
-//                                processImage();
-//                            }
-//                        }
-//                    }
-//                }
-//            };
-//
-//            pcap.loop(Pcap.LOOP_INFINITE, jpacketHandler, " *");
-//
-//            printTrafficStatistics();
-//            printTCPflagsStatistics();
-//            printImageTypes();
-//            printPortsUsed("Servers' ", serversPortsUsed);
-//            printPortsUsed("Client's ", clientPortsUsed);
-//
-//
-//        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//        finally
-//        {
-//            pcap.close();
-//            writer.close();
-//        }
-//
-//    }
-
 
 
 
@@ -393,8 +300,7 @@ public class PcapParse {
 
             clientPortsUsed.add(dport);
 
-
-
+        
     }
 
     /**
@@ -458,6 +364,21 @@ public class PcapParse {
 
     public static StatsList getSRC(){
         return SRClist;
+    }
+
+
+
+    public static void writeFile() throws FileNotFoundException, UnsupportedEncodingException {
+
+        writer = new PrintWriter("Report.txt", "UTF-8");
+
+        printTrafficStatistics();
+        printTCPflagsStatistics();
+        printImageTypes();
+        printPortsUsed("All ", clientPortsUsed);
+
+        writer.close();
+
     }
 
 
