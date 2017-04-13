@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.jnetpcap.Pcap;
@@ -38,7 +39,7 @@ public class displayController {
 
             stage.setTitle("WhyAShark - Top 8 IPs Graphed");
             Scene scene = new Scene(root, 1000, 494);
-
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("shrimp.png")));
             stage.setMaxWidth(1000);
             stage.setMaxHeight(494);
             stage.setMinWidth(100);
@@ -112,6 +113,7 @@ public class displayController {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("display.fxml"));
                 Parent root1 = (Parent) fxmlLoader.load();
                 Stage stage = new Stage();
+                stage.getIcons().add(new Image(getClass().getResourceAsStream("shrimp.png")));
 
                 stage.setTitle("Display");
                 stage.setScene(new Scene(root1));

@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -52,7 +53,7 @@ public class Controller {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("display.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
 
-
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("shrimp.png")));
             stage.setMaxWidth(770);
             stage.setMaxHeight(530);
             stage.setMinWidth(770);
