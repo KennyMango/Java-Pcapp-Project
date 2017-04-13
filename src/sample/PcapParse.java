@@ -368,11 +368,11 @@ public class PcapParse {
 
 
 
-    public static void writeFile(){
+    public static void writeFile(String FileName){
 
         try {
 
-            writer = new PrintWriter("Report.txt", "UTF-8");
+            writer = new PrintWriter(FileName, "UTF-8");
 
             printTrafficStatistics();
             printTCPflagsStatistics();
