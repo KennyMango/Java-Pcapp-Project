@@ -1,15 +1,13 @@
 package sample;
 
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.jnetpcap.Pcap;
@@ -44,7 +42,8 @@ public class displayController {
     @FXML
     private Button savetxtBut;
 
-
+    @FXML
+    private MenuItem fileClose;
 
 
     String FileName = Controller.getPath();
@@ -112,10 +111,33 @@ public class displayController {
 
     }
 
-    @FXML
     public void fileClose(ActionEvent event){
         Platform.exit();
     }
 
+
+    @FXML
+    private MenuItem fileOpen;
+
+    @FXML
+    private TextField textField;
+
+    private static String filePath = "";
+
+    public void fileOpen(ActionEvent event){
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PCAP files (*.pcap)", "*pcap"));
+        File selectedFile = fc.showOpenDialog(null);
+
+        if(selectedFile != null){
+            System.out.println(selectedFile.getAbsoluteFile());
+            //listView.getItems().add(selectedFile.getAbsoluteFile());
+            textField.setText(selectedFile.getAbsolutePath());
+            filePath = selectedFile.getAbsoluteFile().toString();
+        }
+        else{
+            System.out.println("File is not valid");
+        }
+    }
 
 }

@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,6 +15,8 @@ public class Main extends Application {
         primaryStage.setTitle("WhyAShark");
         primaryStage.setScene(new Scene(root, 400, 150));
         primaryStage.show();
+
+        primaryStage.setOnCloseRequest(e -> Platform.exit());
     }
 
 
