@@ -18,10 +18,10 @@
               <children>
                 <Button fx:id="trafficBut" minHeight="30.0" minWidth="112.0" mnemonicParsing="false" onAction="#trafficBut" text="Traffic Stats" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
                 <Button fx:id="TCPFlagBut" minHeight="30.0" minWidth="112.0" mnemonicParsing="false" onAction="#TCPFlagBut" text="TCP Flag Stats" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
-                <Button fx:id="clientBut" minHeight="30.0" minWidth="112.0" mnemonicParsing="false" onAction="#clientBut" text="Client Ports" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                <Button minHeight="30.0" minWidth="112.0" mnemonicParsing="false" text="Server Ports" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                <Button minHeight="30.0" minWidth="112.0" mnemonicParsing="false" text="Image Extensions" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                <Button fx:id="graphBut" minHeight="30.0" minWidth="112.0" mnemonicParsing="false" onAction="#graphBut" text="Graph" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                <Button fx:id="clientBut" minHeight="30.0" minWidth="112.0" mnemonicParsing="false" onAction="#clientBut" text="All Ports" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                <Button fx:id="imgBut" minHeight="30.0" minWidth="112.0" mnemonicParsing="false" onAction="#imgBut" text="Image Extensions" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                <Button fx:id="graphBut" minHeight="30.0" minWidth="112.0" mnemonicParsing="false" onAction="#graphBut" text="Graph IP" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                <Button id="" minHeight="30.0" minWidth="112.0" mnemonicParsing="false" text="Save to txt" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
               </children>
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

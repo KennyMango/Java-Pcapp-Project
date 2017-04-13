@@ -24,13 +24,18 @@ public class graphController {
     private URL location;
 
     @FXML
-    private PieChart pieChart;
+    private PieChart srcPie;
+
+    @FXML
+    private PieChart destPie;
 
 
     @FXML
     void initialize() {
 
-        assert pieChart != null : "fx:id=\"pieChart\" was not injected: check your FXML file 'sample.fxml'.";
+        assert destPie != null : "fx:id=\"pieChart\" was not injected: check your FXML file 'sample.fxml'.";
+        assert srcPie != null : "fx:id=\"pieChart\" was not injected: check your FXML file 'sample.fxml'.";
+
         String FileName = Controller.getPath();
 
         PcapParse PcapParse = new PcapParse(FileName);
@@ -38,12 +43,24 @@ public class graphController {
 
 
         Map<String, Integer> IPList2 = PcapParse.getDST().getTopEight();
+        Map<String, Integer> IPList3 = PcapParse.getSRC().getTopEight();
 
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+
+        ObservableList<PieChart.Data> pieChartDST = FXCollections.observableArrayList();
         for (String key : IPList2.keySet()) {
             System.out.println( key );
-            pieChartData.add(new PieChart.Data(key, IPList2.get(key)));
+            pieChartDST.add(new PieChart.Data(key, IPList2.get(key)));
         }
-        pieChart.setData(pieChartData);
+        destPie.setData(pieChartDST);
+
+
+
+        ObservableList<PieChart.Data> pieChartSRC = FXCollections.observableArrayList();
+        for (String key2 : IPList3.keySet()) {
+            System.out.println( key2 );
+            pieChartSRC.add(new PieChart.Data(key2, IPList3.get(key2)));
+        }
+        System.out.println(pieChartSRC);
+        srcPie.setData(pieChartSRC);
     }
 }

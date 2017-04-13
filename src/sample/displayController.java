@@ -36,6 +36,9 @@ public class displayController {
     @FXML
     private Button clientBut;
 
+    @FXML
+    private Button imgBut;
+
     String FileName = Controller.getPath();
     //HashMap<String, Integer> IPList = new HashMap<String, Integer>();
     PcapParse PcapParse = new PcapParse(FileName);
@@ -43,12 +46,12 @@ public class displayController {
 
     public void graphBut(ActionEvent event){
         try{
-            FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("graphold.fxml"));
+            FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("graph.fxml"));
             Parent root = fxmlLoader2.load();
             Stage stage = new Stage();
 
-            stage.setTitle("Graph");
-            Scene test = new Scene(root, 1920, 1080);
+            stage.setTitle("Top 8 Ips");
+            Scene test = new Scene(root, 1000, 400);
             stage.setScene(test);
 
             test.getStylesheets().add("main.css");
@@ -57,6 +60,7 @@ public class displayController {
             System.out.println("Can't load a new window");
             System.out.println(e);
         }
+
     }
 
     public void trafficBut(ActionEvent event){
@@ -71,6 +75,11 @@ public class displayController {
 
     public void clientBut(ActionEvent event){
         clientBut.setDisable(true);
-        listView.getItems().add(PcapParse.getClientPortsUsed());
+        listView.getItems().add(PcapParse.getPortsUsed());
+    }
+
+    public void imgBut(ActionEvent event){
+        imgBut.setDisable(true);
+        listView.getItems().add(PcapParse.getImageTypes());
     }
 }

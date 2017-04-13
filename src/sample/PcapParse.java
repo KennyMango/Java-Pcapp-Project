@@ -397,6 +397,20 @@ public class PcapParse {
         }
     }
 
+    public static String getImageTypes(){
+
+        String output = "Image types used:\n";
+
+        int i = 0;
+        for (Map.Entry entry : imageTypes.entrySet())
+        {
+            output += String.format("%-4s %s %d \n", entry.getKey(), " ", entry.getValue());
+        }
+
+        return output;
+    }
+
+
     /**
      * Adds the IP destination address to the Map of IP addresses visited
 
@@ -442,17 +456,27 @@ public class PcapParse {
     }
 
 
-    private static String getPortsUsed(String machine, TreeSet<Integer> portsUsed)
+    public static String getPortsUsed()
     {
-        String output = machine + "ports used:\n";
+        String output = "All ports used:\n";
 
         int i = 0;
-
-        for (int port : portsUsed)
+        int index = 0;
+        for (int port : clientPortsUsed)
         {
 
-            output = Integer.toString(port) +"\n";
 
+            if(port > 9999){
+                output += Integer.toString(port) + "\t\t\t";
+            }
+            else{
+                output += Integer.toString(port) + "\t\t\t\t";
+            }
+            if(index >= 4){
+                output += "\n";
+                index = 0;
+            }
+            index ++;
             i++;
 
         }
