@@ -368,16 +368,25 @@ public class PcapParse {
 
 
 
-    public static void writeFile() throws FileNotFoundException, UnsupportedEncodingException {
+    public static void writeFile(){
 
-        writer = new PrintWriter("Report.txt", "UTF-8");
+        try {
 
-        printTrafficStatistics();
-        printTCPflagsStatistics();
-        printImageTypes();
-        printPortsUsed("All ", clientPortsUsed);
+            writer = new PrintWriter("Report.txt", "UTF-8");
 
-        writer.close();
+            printTrafficStatistics();
+            printTCPflagsStatistics();
+            printImageTypes();
+            printPortsUsed("All ", clientPortsUsed);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            writer.close();
+        }
+
 
     }
 
