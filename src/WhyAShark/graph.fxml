@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.GridPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.graphController">
+<AnchorPane prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="WhyAShark.graphController">
   <children>
     <PieChart id="PieChart" fx:id="srcPie" layoutX="0.0" layoutY="0.0" title="Source Ip-ie" />
     <PieChart id="PieChart" fx:id="destPie" layoutX="500.0" layoutY="0.0" title="Destination Ip-ie" />

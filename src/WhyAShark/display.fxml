@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.GridPane?>
 
-<AnchorPane prefHeight="494.0" prefWidth="754.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.displayController">
+<AnchorPane maxHeight="494.0" maxWidth="754.0" minHeight="494.0" minWidth="754.0" prefHeight="494.0" prefWidth="754.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="WhyAShark.displayController">
   <children>
     <SplitPane dividerPositions="0.44680851063829785" focusTraversable="true" layoutX="0.0" layoutY="24.0" prefHeight="470.0" prefWidth="754.0">
       <items>
@@ -46,9 +46,9 @@
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
+            <MenuItem mnemonicParsing="false" onAction="#fileOpen" text="Open" fx:id="fileOpen" />
             <MenuItem mnemonicParsing="false" text="Save" />
             <MenuItem mnemonicParsing="false" onAction="#fileClose" text="Close" fx:id="fileClose" />
-            <MenuItem mnemonicParsing="false" onAction="#fileOpen" text="Open" fx:id="fileOpen" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">

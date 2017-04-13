@@ -1,4 +1,4 @@
-package sample;
+package WhyAShark;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,6 +26,8 @@ public class Controller {
 
     private static String filePath = "";
 
+    public Stage stage = new Stage();
+
     public void openBut(ActionEvent event){
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PCAP files (*.pcap)", "*pcap"));
@@ -49,9 +51,13 @@ public class Controller {
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("display.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
 
-            stage.setTitle("Display");
+
+            stage.setMaxWidth(754);
+            stage.setMaxHeight(494);
+            stage.setMinWidth(754);
+            stage.setMinHeight(494);
+            stage.setTitle("WhyAShark " +filePath +" - Details");
             stage.setScene(new Scene(root1));
             stage.show();
         }catch(Exception e){

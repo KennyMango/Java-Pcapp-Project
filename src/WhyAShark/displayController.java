@@ -1,4 +1,4 @@
-package sample;
+package WhyAShark;
 
 
 import javafx.application.Platform;
@@ -24,27 +24,6 @@ public class displayController {
     @FXML
     private ListView listView;
 
-    @FXML
-    private Button graphBut;
-
-    @FXML
-    private Button trafficBut;
-
-    @FXML
-    private Button TCPFlagBut;
-
-    @FXML
-    private Button clientBut;
-
-    @FXML
-    private Button imgBut;
-
-    @FXML
-    private Button savetxtBut;
-
-    @FXML
-    private MenuItem fileClose;
-
 
     String FileName = Controller.getPath();
 
@@ -57,11 +36,17 @@ public class displayController {
             Parent root = fxmlLoader2.load();
             Stage stage = new Stage();
 
-            stage.setTitle("Top 8 Ips");
-            Scene test = new Scene(root, 1000, 400);
-            stage.setScene(test);
+            stage.setTitle("WhyAShark - Top 8 IPs Graphed");
+            Scene scene = new Scene(root, 1000, 494);
 
-            test.getStylesheets().add("main.css");
+            stage.setMaxWidth(1000);
+            stage.setMaxHeight(494);
+            stage.setMinWidth(100);
+            stage.setMinHeight(494);
+            stage.setScene(scene);
+
+
+            scene.getStylesheets().add("main.css");
             stage.show();
         }catch(Exception e){
             System.out.println("Can't load a new window");
@@ -116,24 +101,27 @@ public class displayController {
     }
 
 
-    @FXML
-    private MenuItem fileOpen;
-
-    @FXML
-    private TextField textField;
-
-    private static String filePath = "";
-
     public void fileOpen(ActionEvent event){
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PCAP files (*.pcap)", "*pcap"));
         File selectedFile = fc.showOpenDialog(null);
 
+
         if(selectedFile != null){
             System.out.println(selectedFile.getAbsoluteFile());
-            //listView.getItems().add(selectedFile.getAbsoluteFile());
-            textField.setText(selectedFile.getAbsolutePath());
-            filePath = selectedFile.getAbsoluteFile().toString();
+            FileName = selectedFile.getAbsoluteFile().toString();
+            try{
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("display.fxml"));
+                Parent root1 = (Parent) fxmlLoader.load();
+                Stage stage = new Stage();
+
+                stage.setTitle("Display");
+                stage.setScene(new Scene(root1));
+                stage.show();
+            }catch(Exception e){
+                System.out.println("Can't load a new window");
+                System.out.println(e);
+            }
         }
         else{
             System.out.println("File is not valid");

@@ -1,4 +1,4 @@
-package sample;
+package WhyAShark;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -12,7 +12,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("WhyAShark");
+        primaryStage.setTitle("WhyAShark - File Opener");
         primaryStage.setScene(new Scene(root, 400, 150));
         primaryStage.show();
 

@@ -1,4 +1,4 @@
-package sample;
+package WhyAShark;
 
 import java.net.URL;
 import java.util.HashMap;

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.GridPane?>
 
-<GridPane alignment="CENTER" gridLinesVisible="false" hgap="10.0" prefHeight="316.0001220703125" prefWidth="690.0000999999975" vgap="10.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controller">
+<GridPane alignment="CENTER" gridLinesVisible="false" hgap="10.0" prefHeight="316.0001220703125" prefWidth="690.0000999999975" vgap="10.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="WhyAShark.Controller">
   <children>
     <Button fx:id="openBut" contentDisplay="LEFT" mnemonicParsing="false" onAction="#openBut" prefWidth="79.0" text="Browse..." GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
     <TextField fx:id="textField" prefWidth="200.0" text="Enter File Path" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" GridPane.rowSpan="1" />
